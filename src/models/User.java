@@ -6,6 +6,7 @@ public class User implements java.io.Serializable {
 	
 	private String user = "";
 	private String mail = "";
+	private String pass = "";
 	private int[] error = {0,0}; 
 	
 	/* Getters */
@@ -15,6 +16,10 @@ public class User implements java.io.Serializable {
 	
 	public String getMail() {
 		return mail;
+	}
+	
+	public String getPass() {
+		return pass;
 	}
 	
 	public int[] getError() {
@@ -28,9 +33,11 @@ public class User implements java.io.Serializable {
 	
 	public void setMail(String mail){
 		this.mail = mail;
-
 	}
 	
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
 	/* Logic Functions */
 	public boolean isComplete() {
 	    return(hasValue(getUser()) &&

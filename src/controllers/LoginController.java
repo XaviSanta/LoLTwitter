@@ -40,7 +40,7 @@ public class LoginController extends HttpServlet {
 	    try {
 			
 	    	BeanUtils.populate(login, request.getParameterMap());
-			
+	    	
 	    	if (login.isComplete()) {
 		    	
 	    		System.out.println("login OK, forwarding to ViewLoginDone ");
