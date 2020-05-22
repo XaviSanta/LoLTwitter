@@ -3,7 +3,7 @@ package models;
 public class Login {
 
 	private String user = "";
-	private String pass = "";
+	private String password = "";
 	
 	private int[] error = {0};
 	
@@ -11,16 +11,16 @@ public class Login {
 		return user;
 	}
 	
-	public String getPass() {
-		return pass;
+	public String getPassword() {
+		return password;
 	}
 	
 	public void setUser(String user){
 		this.user = user;
 	}
 	
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public int[] getError() {
