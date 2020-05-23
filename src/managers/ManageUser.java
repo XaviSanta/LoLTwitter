@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import models.Login;
 import models.User;
 import utils.DAO;
 
@@ -26,6 +27,22 @@ public class ManageUser {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+	}
+	// Check Login User-pass
+	public boolean isCorrectLogin(Login login) {
+		String query = "SELECT password "
+				+ "from ts1.useraccounts "
+				+ "WHERE username='"+ login.getUser() + "'";
+		try {
+			ResultSet rs = db.executeSQL(query);
+			if (rs.next()) {
+				String password = rs.getString("password");
+				return password.equals(login.getPassword());
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	// Check User name

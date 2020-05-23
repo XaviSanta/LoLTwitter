@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import managers.ManageUser;
 import models.Login;
 
 /**
@@ -37,27 +38,33 @@ public class LoginController extends HttpServlet {
 		System.out.print("LoginController: ");
 		
 		Login login = new Login();
+		ManageUser manager = new ManageUser();
+		String view = "ViewLoginForm.jsp";
+		
 	    try {
 			
 	    	BeanUtils.populate(login, request.getParameterMap());
 	    	
 	    	if (login.isComplete()) {
-		    	
-	    		System.out.println("login OK, forwarding to ViewLoginDone ");
-		    	HttpSession session = request.getSession();
-		    	session.setAttribute("user",login.getUser());
-		    	RequestDispatcher dispatcher = request.getRequestDispatcher("ViewLoginDone.jsp");
-			    dispatcher.forward(request, response);
-			    
+		    	// Check if it matches user and password in database
+	    		if (manager.isCorrectLogin(login)) {
+	    			System.out.println("login OK, forwarding to ViewLoginDone ");
+			    	HttpSession session = request.getSession();
+			    	session.setAttribute("user",login.getUser());
+			    	view = "ViewLoginDone.jsp";
+	    		} else {
+	    			login.setError(true);
+	    			System.out.println("login Wrong, forwarding to ViewLoginForm ");
+				    request.setAttribute("login",login);
+	    		}
 		    } 
 			else {
-		     
-				System.out.println("login OK, forwarding to ViewLoginForm ");
+				System.out.println("login Wrong, forwarding to ViewLoginForm ");
 			    request.setAttribute("login",login);
-			    RequestDispatcher dispatcher = request.getRequestDispatcher("ViewLoginForm.jsp");
-			    dispatcher.forward(request, response);
-		    	
 		    }
+
+		    RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+		    dispatcher.forward(request, response);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}

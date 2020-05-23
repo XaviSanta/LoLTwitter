@@ -5,7 +5,7 @@ public class Login {
 	private String user = "";
 	private String password = "";
 	
-	private int[] error = {0};
+	private boolean error = false;
 	
 	public String getUser(){
 		return user;
@@ -23,7 +23,11 @@ public class Login {
 		this.password = password;
 	}
 	
-	public int[] getError() {
+	public void setError(boolean error) {
+		this.error = error;
+	}
+	
+	public boolean getError() {
 		return error;
 	}
 	

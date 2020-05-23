@@ -2,6 +2,12 @@
     pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<ul class="server-errors-list">
+<c:if test = "${login.error}">
+	<li> Incorrect username or password </li>
+</c:if>
+</ul>
+
 <form action="LoginController" method="POST">
 	<p>      
     <label class="w3-text-red"><b> Username </b></label>
