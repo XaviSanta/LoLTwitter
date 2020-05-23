@@ -10,7 +10,7 @@
 
 <form action="RegisterController" method="POST">
 	<p>      
-    <label class="w3-text-red"><b> Username </b></label>
+    <label class="w3-text-red"><b> Username233245345 </b></label>
     <input class="w3-input w3-border w3-light-grey" type="text" name="user" value="${user.user}" required minlength="5" ></p>
     <p>      
     <label class="w3-text-red"><b> Mail address </b></label>
