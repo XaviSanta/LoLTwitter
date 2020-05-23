@@ -3,17 +3,31 @@ package models;
 public class Login {
 
 	private String user = "";
-	private int[] error = {0};
+	private String password = "";
+	
+	private boolean error = false;
 	
 	public String getUser(){
 		return user;
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 	
 	public void setUser(String user){
 		this.user = user;
 	}
 	
-	public int[] getError() {
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public void setError(boolean error) {
+		this.error = error;
+	}
+	
+	public boolean getError() {
 		return error;
 	}
 	

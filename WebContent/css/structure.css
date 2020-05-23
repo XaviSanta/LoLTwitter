@@ -74,3 +74,7 @@ body {
  padding: 10px;
 }
 .clear { clear: both; background: none; }
+
+.server-errors-list {
+  color:red;
+}
