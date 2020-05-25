@@ -51,13 +51,14 @@ public class LoginController extends HttpServlet {
 	    			System.out.println("login OK, forwarding to ViewLoginDone ");
 			    	HttpSession session = request.getSession();
 			    	session.setAttribute("user",login.getUser());
+			    	System.out.println(session);
 			    	view = "ViewLoginDone.jsp";
 	    		} else {
 	    			login.setError(true);
 	    			System.out.println("login Wrong, forwarding to ViewLoginForm ");
 				    request.setAttribute("login",login);
 	    		}
-		    } 
+		    }
 			else {
 				System.out.println("login Wrong, forwarding to ViewLoginForm ");
 			    request.setAttribute("login",login);
