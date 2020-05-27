@@ -1,5 +1,8 @@
 package models;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -45,11 +48,29 @@ public class User implements java.io.Serializable {
 	}
 	
 	public void setPassword(String password) {
-		this.password = password;
+		String regex = "(?=.[A-Z])(?=.[a-z])(?=.'\\'d)[a-zA-Z'\\'d]";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(password);
+		if( matcher.matches()) {
+			this.password = password;
+		}
+		else {
+			error[1]=true;
+			System.out.println(password);	
+		}
 	}
 	
 	public void setPassword2(String password2) {
-		this.password2 = password2;
+		String regex = "(?=.[A-Z])(?=.[a-z])(?=.'\\'d)[a-zA-Z'\\'d]";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(password2);
+		if( matcher.matches()) {
+			this.password2 = password2;
+		}
+		else {
+			error[1]=true;
+			System.out.println(password2);	
+		}
 	}
 	
 	/* Logic Functions */
