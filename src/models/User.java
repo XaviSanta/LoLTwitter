@@ -48,27 +48,27 @@ public class User implements java.io.Serializable {
 	}
 	
 	public void setPassword(String password) {
-		String regex = "(?=.[A-Z])(?=.[a-z])(?=.'\\'d)[a-zA-Z'\\'d]";
+		String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(password);
 		if( matcher.matches()) {
 			this.password = password;
 		}
 		else {
-			error[1]=true;
-			System.out.println(password);	
+			error[2]=true;
+			System.out.println(password);
 		}
 	}
 	
 	public void setPassword2(String password2) {
-		String regex = "(?=.[A-Z])(?=.[a-z])(?=.'\\'d)[a-zA-Z'\\'d]";
+		String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(password2);
 		if( matcher.matches()) {
 			this.password2 = password2;
 		}
 		else {
-			error[1]=true;
+			error[3]=true;
 			System.out.println(password2);	
 		}
 	}
@@ -77,7 +77,8 @@ public class User implements java.io.Serializable {
 	public boolean isComplete() {
 	    return(hasValue(getUser()) &&
 	           hasValue(getMail()) && 
-	           hasValue(getPassword()));
+	           hasValue(getPassword()) && 
+	           hasValue(getPassword2()));
 	}
 	
 	private boolean hasValue(String val) {
