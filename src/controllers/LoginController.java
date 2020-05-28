@@ -60,7 +60,7 @@ public class LoginController extends HttpServlet {
 	    		}
 		    }
 			else {
-				System.out.println("login Wrong, forwarding to ViewLoginForm ");
+				System.out.println(" forwarding to ViewLoginForm ");
 			    request.setAttribute("login",login);
 		    }
 
