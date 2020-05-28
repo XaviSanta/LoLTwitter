@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -46,7 +47,9 @@ public class RegisterController extends HttpServlet {
 				   manager.addUser(user);
 				   manager.finalize();
 				   System.out.println(" user ok, forwarding to ViewLoginForm");
-				   view = "ViewLoginForm.jsp";
+				   HttpSession session = request.getSession();
+				   session.setAttribute("user", user.getUser());
+				   view = "ViewLoginDone.jsp";
 			   } else {
 				   System.out.println(" user exists, forwarding to ViewRegisterForm");
 				   user.setError(0, true);

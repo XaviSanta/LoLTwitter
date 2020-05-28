@@ -90,4 +90,8 @@ public class ManageUser {
 	private boolean hasValue(String val) {
 		return((val != null) && (!val.equals("")));
 	}
+	
+	private String hashString() {
+		return "";
+	}
 }

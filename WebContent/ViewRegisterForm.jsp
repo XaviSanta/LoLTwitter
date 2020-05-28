@@ -11,16 +11,16 @@
 <form action="RegisterController" method="POST">
 	<p>      
     <label class="w3-text-red"><b> Username </b></label>
-    <input class="w3-input w3-border w3-light-grey" type="text" name="user" value="${user.user}" required minlength="5" ></p>
+    <input class="w3-input w3-border w3-light-grey" type="text" name="user" value="${user.user}" required minlength="3" ></p>
     <p>      
     <label class="w3-text-red"><b> Mail address </b></label>
     <input class="w3-input w3-border w3-light-grey" type="email" name="mail" value = "${user.mail}" required></p>
     <p>
     <label class="w3-text-red"><b> Password </b></label>
-    <input class="w3-input w3-border w3-light-grey" type="password" id="password" name="password" value = "${user.password}" required></p>
+    <input class="w3-input w3-border w3-light-grey" type="password" id="password" name="password" value = "${user.password}" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$" title="More than 6 characters with lower, upper caps and numbers."></p>
 	<p>
     <label class="w3-text-red"><b> Confirm Password </b></label>
-    <input class="w3-input w3-border w3-light-grey" type="password" id="pass_confirmation" name="password2" value = "${user.password2}" required></p>
+    <input class="w3-input w3-border w3-light-grey" type="password" id="pass_confirmation" name="password2" value = "${user.password2}" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"title="More than 6 characters with lower, upper caps and numbers."></p>
 	<p>
     <input class="w3-btn w3-red" type="submit" name="sumbit" value="Submit"></p>
 </form>
