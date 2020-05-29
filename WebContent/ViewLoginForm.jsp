@@ -2,9 +2,6 @@
     pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<link rel="stylesheet" href="./css/login.css">
-
-<body>
   <form action="LoginController" method="POST" class="login-form">
     <h1>Login</h1>
       <ul class="server-errors-list">
@@ -48,4 +45,3 @@
         $(this).removeClass("focus");
     });
   </script>
-</body>
