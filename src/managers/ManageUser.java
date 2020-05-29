@@ -8,6 +8,10 @@ import models.Login;
 import models.User;
 import utils.DAO;
 
+import java.math.BigInteger; 
+import java.security.MessageDigest; 
+import java.security.NoSuchAlgorithmException; 
+
 public class ManageUser {
 	
 	private DAO db = null ;
@@ -37,7 +41,11 @@ public class ManageUser {
 			ResultSet rs = db.executeSQL(query);
 			if (rs.next()) {
 				String password = rs.getString("password");
-				return password.equals(login.getPassword());
+				
+				String inputPassword = encryptThisString(login.getPassword()+"salt");
+				
+				
+				return password.equals(inputPassword);
 			}			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,14 +73,15 @@ public class ManageUser {
 	
 	// Add new user
 	public void addUser(User user) {
+		String hashedUsername = "SHA2(CONCAT('"+user.getPassword()+"','salt'),512)";
 		String query = "INSERT INTO UserAccounts "
-				+ "(username, email, password) VALUES (?,?,?)";
+				+ "(username, email, password, submission_date) VALUES (?,?,"+hashedUsername+",NOW())";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
 			statement.setString(1,user.getUser());
 			statement.setString(2,user.getMail());
-			statement.setString(3,user.getPassword());
+			//statement.setString(3,"SHA2(CONCAT('"+user.getPassword()+"','salt'),512)");
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLException e) {
@@ -94,4 +103,36 @@ public class ManageUser {
 	private String hashString() {
 		return "";
 	}
+	
+	public static String encryptThisString(String input) 
+    { 
+        try { 
+            // getInstance() method is called with algorithm SHA-512 
+            MessageDigest md = MessageDigest.getInstance("SHA-512"); 
+  
+            // digest() method is called 
+            // to calculate message digest of the input string 
+            // returned as array of byte 
+            byte[] messageDigest = md.digest(input.getBytes()); 
+  
+            // Convert byte array into signum representation 
+            BigInteger no = new BigInteger(1, messageDigest); 
+  
+            // Convert message digest into hex value 
+            String hashtext = no.toString(16); 
+  
+            // Add preceding 0s to make it 32 bit 
+            while (hashtext.length() < 32) { 
+                hashtext = "0" + hashtext; 
+            } 
+  
+            // return the HashText 
+            return hashtext; 
+        } 
+  
+        // For specifying wrong message digest algorithms 
+        catch (NoSuchAlgorithmException e) { 
+            throw new RuntimeException(e); 
+        } 
+    }
 }
