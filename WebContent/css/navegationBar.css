@@ -63,6 +63,26 @@ img{
  	background-color:transparent;
 }
 
+.topnav{
+	background: #f1f1f1;
+	background-image: linear-gradient(120deg,#0b8ce2,#007451);
+    color: linear-gradient(120deg,#0b8ce2,#007451);
+	
+}
+@media (min-width: 901px){
+	div a{
+		display: none;
+	}
+}
+
+@media (max-width: 900px) {                  
+	.Bar-space {
+      display: none;
+   }
+   
+}
+
+
 .Bar-space{
   width: 255px;
   background-color: #100F0F;
@@ -77,8 +97,10 @@ img{
   right: 80%;
   z-index: 2;
   list-style-type: none;
- 
+  
 }
+
+
 
 li a {
 
@@ -121,4 +143,3 @@ p{
 	font-weight: normal;
 	text-align: center;
 }
-

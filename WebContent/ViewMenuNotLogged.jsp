@@ -13,6 +13,7 @@
 </head>
 <body>
 
+
 <ul class = "Bar-space">
 
   <li><a href="#home"> <i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp; Home</a></li>
@@ -22,6 +23,17 @@
   <p><br><img src="images/lol2.png" width="85" height="85"/><br></p>
   <p>Join our community and enjoy</p>
 </ul>
+
+
+<div class="topnav">
+  <a class="active" href="#home">Home</a>
+  <a href="#news">News</a>
+  <a href="#contact">Login</a>
+  <a href="#about">About us</a>
+</div>
+
+
+
 
 </body>
 
