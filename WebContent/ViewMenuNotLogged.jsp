@@ -28,7 +28,7 @@
 <div class="topnav">
   <a class="active" href="#home">Home</a>
   <a href="#news">News</a>
-  <a href="#contact">Login</a>
+  <a class="menu" id="LoginController" href="#">Login</a>
   <a href="#about">About us</a>
 </div>
 
