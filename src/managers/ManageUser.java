@@ -12,6 +12,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest; 
 import java.security.NoSuchAlgorithmException; 
 
+import java.util.Random;
+
 public class ManageUser {
 	
 	private DAO db = null ;
@@ -34,16 +36,16 @@ public class ManageUser {
 	}
 	// Check Login User-pass
 	public boolean isCorrectLogin(Login login) {
-		String query = "SELECT password "
+		String query = "SELECT password,salt "
 				+ "from ts1.useraccounts "
 				+ "WHERE username='"+ login.getUser() + "'";
 		try {
 			ResultSet rs = db.executeSQL(query);
 			if (rs.next()) {
 				String password = rs.getString("password");
+				String salt = rs.getString("salt");
 				
-				String inputPassword = encryptThisString(login.getPassword()+"salt");
-				
+				String inputPassword = encryptThisString(login.getPassword()+salt);
 				
 				return password.equals(inputPassword);
 			}			
@@ -72,20 +74,28 @@ public class ManageUser {
 	}
 	
 	// Add new user
-	public void addUser(User user) {
-		String hashedUsername = "SHA2(CONCAT('"+user.getPassword()+"','salt'),512)";
+	public boolean addUser(User user) {
+		Random rand = new Random();
+		
+		// Obtain a number between [0 - 2147483646].
+		int salt = rand.nextInt(2147483647);
+		String hashedUsername = "SHA2(CONCAT('"+user.getPassword()+"','"+salt+"'),512)";
 		String query = "INSERT INTO UserAccounts "
-				+ "(username, email, password, submission_date) VALUES (?,?,"+hashedUsername+",NOW())";
+				+ "(username, email, password, salt, submission_date) "
+				+ "VALUES (?,?,"+hashedUsername+",?,NOW())";
+		
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
 			statement.setString(1,user.getUser());
 			statement.setString(2,user.getMail());
-			//statement.setString(3,"SHA2(CONCAT('"+user.getPassword()+"','salt'),512)");
+			statement.setInt(3, salt);
 			statement.executeUpdate();
 			statement.close();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
