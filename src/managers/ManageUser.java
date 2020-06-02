@@ -10,8 +10,9 @@ import utils.DAO;
 
 import java.math.BigInteger; 
 import java.security.MessageDigest; 
-import java.security.NoSuchAlgorithmException; 
-
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class ManageUser {
@@ -57,6 +58,53 @@ public class ManageUser {
 		}
 		
 		return user;
+	}
+	
+	// Get users a given user is following
+	public List<User> getUserFollows(String uid) {
+		 String query = "SELECT users.uid FROM followers JOIN users ON users.uid = followers.fid WHERE followers.uid = ?;";
+		 PreparedStatement statement = null;
+		 List<User> l = new ArrayList<User>();
+		 try {
+			 statement = db.prepareStatement(query);
+			 statement.setString(1,uid);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 User user = new User();
+				 user.setUser(rs.getString("uid"));
+				 // user.setName(rs.getString("name"));
+				 l.add(user);
+			 }
+			 rs.close();
+			 statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return  l;
+	}
+	
+	public List<User> getUserFollows(String uid, Integer start, Integer end) {
+		 String query = "SELECT users.uid FROM followers JOIN users ON users.uid = followers.fid WHERE followers.uid = ? ORDER BY users.uid LIMIT ?,?;";
+		 PreparedStatement statement = null;
+		 List<User> l = new ArrayList<User>();
+		 try {
+			 statement = db.prepareStatement(query);
+			 statement.setString(1,uid);
+			 statement.setInt(2,start);
+			 statement.setInt(3,end);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 User user = new User();
+				 user.setUser(rs.getString("uid"));
+				 // user.setName(rs.getString("name"));
+				 l.add(user);
+			 }
+			 rs.close();
+			 statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return  l;
 	}
 	
 	// Check Login User-pass

@@ -87,7 +87,6 @@ $(document).ready(function(){
      
      <!-- Profile -->
      <div id="duser"> </div>
-     
    <!-- End Left Column -->
    </div>
    
@@ -110,8 +109,6 @@ $(document).ready(function(){
 
    <!-- End Middle Column -->
    </div>
-   
  <!-- End Grid -->
  </div>
  
-<!-- End Page Container -->
