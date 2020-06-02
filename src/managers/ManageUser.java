@@ -34,11 +34,36 @@ public class ManageUser {
 			e.printStackTrace();
 		}
 	}
+	
+	// Get a user given its PK
+	public User getUser(String uid) {
+		String query = "SELECT uid FROM users WHERE uid = ? ;";
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		User user = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,uid);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				user = new User();
+				user.setUser(rs.getString("uid"));
+				// user.setName(rs.getString("name"));
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
 	// Check Login User-pass
 	public boolean isCorrectLogin(Login login) {
 		String query = "SELECT password,salt "
-				+ "from ts1.useraccounts "
-				+ "WHERE username='"+ login.getUser() + "'";
+				+ "from ts1.users "
+				+ "WHERE uid='"+ login.getUser() + "'";
 		try {
 			ResultSet rs = db.executeSQL(query);
 			if (rs.next()) {
@@ -57,7 +82,7 @@ public class ManageUser {
 	
 	// Check User name
 	public boolean isUsernameAvailable(User user) {
-		String query = "SELECT * from UserAccounts where username='" + user.getUser() +"'";
+		String query = "SELECT * from users where uid='" + user.getUser() +"'";
 		
 		try {
 			ResultSet rs = db.executeSQL(query);
@@ -80,8 +105,8 @@ public class ManageUser {
 		// Obtain a number between [0 - 2147483646].
 		int salt = rand.nextInt(2147483647);
 		String hashedUsername = "SHA2(CONCAT('"+user.getPassword()+"','"+salt+"'),512)";
-		String query = "INSERT INTO UserAccounts "
-				+ "(username, email, password, salt, submission_date) "
+		String query = "INSERT INTO users "
+				+ "(uid, email, password, salt, submission_date) "
 				+ "VALUES (?,?,"+hashedUsername+",?,NOW())";
 		
 		PreparedStatement statement = null;
