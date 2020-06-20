@@ -70,11 +70,22 @@ $(document).ready(function(){
    		});
 	});
 	
+	/* Comment on tweet*/
+
+	$("body").on("click",".comment",function(event){
+        event.preventDefault();
+        var tweet = $(this).parent();
+        $.post( "CommentTweet", {tid: $(this).parent().attr("id"), uid:uid } , function(data) {
+           });
+    });
+	
+	
 	// ***************************************************************************************************//
 	// Elements $("body").on("click","...)  caputure clicks of elements that have been dinamically loaded //
 	// ***************************************************************************************************//
 	
 	/* Delete tweet from user */
+	
 	$("body").on("click",".dT",function(event){
 		event.preventDefault();
 		var tweet = $(this).parent();
