@@ -13,6 +13,7 @@ public class Tweets implements java.io.Serializable {
 	 public Tweets() {
 	 }
 
+	 
 	 public Integer getTid() {
 		 return this.tid;
 	 }
