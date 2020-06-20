@@ -86,9 +86,10 @@ $(document).ready(function(){
 	
 	//add likes:
 	
-	$(".alik").click(function(event){
+	$("body").on("click",".alik",function(event){
 		event.preventDefault();
-		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id") } , function(data) {
+		var tweet = $(this).parent();
+		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid:uid } , function(data) {
    		});
 	});
 

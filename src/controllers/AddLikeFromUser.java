@@ -16,6 +16,7 @@ import managers.ManageLike;
 import managers.ManageTweets;
 import models.Like;
 import models.Tweets;
+import models.alikModel;
 
 /**
  * Servlet implementation class AddLikeFromUser
@@ -39,13 +40,12 @@ public class AddLikeFromUser extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		Like like = new Like();
-		Tweets tweet = new Tweets();
+		alikModel alikm = new alikModel();
 
 		try {
-			BeanUtils.populate(tweet, request.getParameterMap());
+			BeanUtils.populate(alikm, request.getParameterMap());
 			ManageLike likeManager = new ManageLike();
-			likeManager.addLike(tweet.getTid(),tweet.getUid(),  new Timestamp(System.currentTimeMillis()));
+			likeManager.addLike(alikm.getTid(), alikm.getUid(), new Timestamp(System.currentTimeMillis()));
 			likeManager.finalize();
 
 		} catch (IllegalAccessException | InvocationTargetException e) {
