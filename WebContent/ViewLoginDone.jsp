@@ -70,6 +70,20 @@ $(document).ready(function(){
    		});
 	});
 	
+	// Add comment to specific tweet
+	$("#cM").click(function(event){
+		//System.out.println("CM clicked!");
+		event.preventDefault();
+		$.post( "AddComment", { uid: uid, content: $("#cT").text(), pid: $(this).parent().attr("id") } , function(data) {
+			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
+				start = nt;
+				cview = "GetTweetsFromUser";
+			});
+   		});
+	});
+	
+	
+	
 	// ***************************************************************************************************//
 	// Elements $("body").on("click","...)  caputure clicks of elements that have been dinamically loaded //
 	// ***************************************************************************************************//
@@ -83,6 +97,13 @@ $(document).ready(function(){
 			start = start - 1;
 	  	});
 	});
+	
+	/*$("body").on("click", ".cm", function(event){
+		event.preventDefault();
+		var tweet = $(this).parent();
+		$.post()
+	});
+	*/
 
 });
 </script>

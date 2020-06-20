@@ -7,6 +7,7 @@ public class Tweets implements java.io.Serializable {
 
 	 private Integer tid;
 	 private String uid;
+	 private Integer pid;
 	 private Timestamp postDateTime;
 	 private String content;
 
@@ -27,6 +28,14 @@ public class Tweets implements java.io.Serializable {
 	 
 	 public void setUid(String uid) {
 		 this.uid = uid;
+	 }
+	 
+	 public void setPid(Integer pid) {
+		 this.pid = pid;
+	 }
+	 
+	 public Integer getPid() {
+		 return this.pid;
 	 }
 	 
 	 public Timestamp getPostDateTime() {

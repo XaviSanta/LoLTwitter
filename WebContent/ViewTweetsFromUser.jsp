@@ -10,5 +10,9 @@
    <p> ${t.content} </p>
    <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> &nbsp;Like</button>
    <button type="button" class="dT w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button> 
+   <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-comment"></i> &nbsp;Comments</button>
+   
+   <p id="cT" contenteditable="true" class="w3-border w3-padding">Type your thoughts about this.</p>
+   <button id="cM" type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i> &nbsp;Post Comment</button> 
  </div>
 </c:forEach>
