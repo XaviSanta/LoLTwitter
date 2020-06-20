@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="false"%>
     
+<<<<<<< HEAD
 <link rel="stylesheet" href="./css/navegationBar.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,6 +31,18 @@
   <a href="#news">News</a>
   <a class="menu" id="LoginController" href="#">Login</a>
   <a href="#about">About us</a>
+=======
+<div class="w3-bar w3-indigo">
+	<a class="w3-bar-item w3-button" id="LoginController" href="MainController"> <i class="fa fa-home" aria-hidden="true"></i> </a>
+	<a class="menu w3-bar-item w3-button w3-hide-small" id="RegisterController" href=#> Registration </a> 
+	<a class="menu w3-bar-item w3-button w3-hide-small" id="LoginController" href=#> Login </a> 
+	<a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="stack()">&#9776;</a>
+</div>
+
+<div id="stack" class="w3-bar-block w3-indigo w3-hide w3-hide-large w3-hide-medium">
+	<a class="menu w3-bar-item w3-button" id="RegisterController" href=#> Registration </a> 
+	<a class="menu w3-bar-item w3-button" id="LoginController" href=#> Login </a> 
+>>>>>>> cbd81c5284a7c3b19cf3d638aa395a3c6b8ce21f
 </div>
 
 

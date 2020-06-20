@@ -7,7 +7,7 @@ public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String user = "";
+	private String user = ""; //UID
 	private String mail = "";
 	private String password = "";
 	private String password2 = "";
