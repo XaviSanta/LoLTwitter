@@ -45,7 +45,15 @@ public class AddLikeFromUser extends HttpServlet {
 		try {
 			BeanUtils.populate(alikm, request.getParameterMap());
 			ManageLike likeManager = new ManageLike();
-			likeManager.addLike(alikm.getTid(), alikm.getUid(), new Timestamp(System.currentTimeMillis()));
+			ManageTweets manageTweet = new ManageTweets();
+			
+			boolean succes = likeManager.addLike(alikm.getTid(), alikm.getUid(), new Timestamp(System.currentTimeMillis()));
+			if(succes) {
+				
+				manageTweet.likeTweet(alikm.getTid());
+			}
+			
+			
 			likeManager.finalize();
 
 		} catch (IllegalAccessException | InvocationTargetException e) {

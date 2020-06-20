@@ -87,8 +87,9 @@ public class ManageLike {
 	
 	
 	// Add a Like 
-	public void addLike(Integer tweet_ID, String uid, Timestamp like_date) {
+	public boolean addLike(Integer tweet_ID, String uid, Timestamp like_date) {
 		String query = "INSERT INTO likes (tweet_ID, uid,like_date) VALUES (?,?,?)";
+		
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
@@ -97,8 +98,11 @@ public class ManageLike {
 			statement.setTimestamp(3,like_date);
 			statement.executeUpdate();
 			statement.close();
+			return true;
+			 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			return false;
 		}
 	}
 	

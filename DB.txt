@@ -39,12 +39,13 @@ create table `users`(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `likes`;
-create table `likes`(
-   ID INT NOT NULL AUTO_INCREMENT,
-   tweet_ID INT NOT NULL,
-   uid VARCHAR(24) NOT NULL,
-   like_date DATETIME,
-   PRIMARY KEY ( ID )
-);
+CREATE TABLE `likes` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `tweet_ID` int NOT NULL,
+  `uid` varchar(24) NOT NULL,
+  `like_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY ( `tweet_ID`,`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 
