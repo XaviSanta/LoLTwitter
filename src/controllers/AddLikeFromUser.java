@@ -1,11 +1,21 @@
 package controllers;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.Timestamp;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.beanutils.BeanUtils;
+
+import managers.ManageLike;
+import managers.ManageTweets;
+import models.Like;
+import models.Tweets;
 
 /**
  * Servlet implementation class AddLikeFromUser
@@ -27,7 +37,21 @@ public class AddLikeFromUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		Like like = new Like();
+		Tweets tweet = new Tweets();
+
+		try {
+			BeanUtils.populate(tweet, request.getParameterMap());
+			ManageLike likeManager = new ManageLike();
+			likeManager.addLike(tweet.getTid(),tweet.getUid(),  new Timestamp(System.currentTimeMillis()));
+			likeManager.finalize();
+
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

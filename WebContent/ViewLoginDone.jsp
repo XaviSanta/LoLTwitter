@@ -83,6 +83,14 @@ $(document).ready(function(){
 			start = start - 1;
 	  	});
 	});
+	
+	//add likes:
+	
+	$(".alik").click(function(event){
+		event.preventDefault();
+		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id") } , function(data) {
+   		});
+	});
 
 });
 </script>
