@@ -40,10 +40,11 @@ public class CommentTweet extends HttpServlet {
 
 	        try {
 	            BeanUtils.populate(alikm, request.getParameterMap());
+
 	            ManageTweets tweetManager = new ManageTweets();
 	            //likeManager.addLike(alikm.getTid(), alikm.getUid(), new Timestamp(System.currentTimeMillis()));
 	            //likeManager.finalize();
-	            tweetManager.addComment(alikm.getUid(), new Timestamp(System.currentTimeMillis()), tweetManager.getTweet(alikm.getTid()).getContent(), alikm.getTid());
+	            tweetManager.addComment(alikm.getUid(), new Timestamp(System.currentTimeMillis()), alikm.getComment(), alikm.getTid());
 
 	        } catch (IllegalAccessException | InvocationTargetException e) {
 	            // TODO Auto-generated catch block

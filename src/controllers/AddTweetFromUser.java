@@ -39,6 +39,7 @@ public class AddTweetFromUser extends HttpServlet {
 
 		try {
 			BeanUtils.populate(tweet, request.getParameterMap());
+			
 			ManageTweets tweetManager = new ManageTweets();
 			tweetManager.addTweet(tweet.getUid(),  new Timestamp(System.currentTimeMillis()), tweet.getContent());
 			tweetManager.finalize();

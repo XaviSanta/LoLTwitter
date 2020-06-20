@@ -75,8 +75,13 @@ $(document).ready(function(){
 	$("body").on("click",".comment",function(event){
         event.preventDefault();
         var tweet = $(this).parent();
-        $.post( "CommentTweet", {tid: $(this).parent().attr("id"), uid:uid } , function(data) {
-           });
+        console.log('The texto is: '+ $("#cM").text());
+        $.post( "CommentTweet", {tid: $(this).parent().attr("id"), uid:uid, content: $("#cM").text() } , function(data) {
+        	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
+				start = nt;
+				cview = "GetTweetsFromUser";
+			});
+       	});
     });
 	
 	
