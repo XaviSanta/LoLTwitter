@@ -60,7 +60,7 @@ public class ManageTweets {
 	
 	/* Add a tweet */
 	public void addTweet(String uid, Timestamp postDateTime, String content ) {
-		String query = "INSERT INTO tweets (uid,postdatetime,content) VALUES (?,?,?)";
+		String query = "INSERT INTO tweets (uid,postdatetime,content,likes) VALUES (?,?,?,0)";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
@@ -109,6 +109,29 @@ public class ManageTweets {
 			e.printStackTrace();
 		}
 	}
+	
+	//add like:
+	public void likeTweet(Integer tid) {
+		// Note that this is done using https://www.arquitecturajava.com/jdbc-prepared-statement-y-su-manejo/
+		String query = "UPDATE tweets SET likes = likes +1 WHERE tid= ?;";
+	
+		
+		PreparedStatement statement = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setInt(1,tid);
+			statement.executeUpdate();
+			statement.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		
+		
+		
+	}
+	
 	
 	/* Delete existing tweet */
 	public void deleteTweet(Integer tid) {
@@ -194,7 +217,7 @@ public class ManageTweets {
 	
 	// Get tweets from a user given start and end
 	public List<Tweets> getUserTweets(String uid,Integer start, Integer end) {
-		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content FROM tweets where tweets.uid LIKE ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
+		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content, tweets.likes FROM tweets where tweets.uid LIKE ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
 		 try {
@@ -209,6 +232,7 @@ public class ManageTweets {
 				 tweet.setUid(rs.getString("uid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();

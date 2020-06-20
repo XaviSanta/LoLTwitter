@@ -1,18 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `ts1`;
 USE `ts1`;
 
-DROP TABLE IF EXISTS `users`;
-create table `users`(
-   ID INT NOT NULL AUTO_INCREMENT,
-   uid VARCHAR(24) NOT NULL,
-   email VARCHAR(24) NOT NULL,
-   password VARCHAR(255) NOT NULL,
-   salt VARCHAR(24) NOT NULL,
-   submission_date DATETIME,
-   PRIMARY KEY ( ID ),
-   UNIQUE KEY ( uid,email )
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 DROP TABLE IF EXISTS `followers`;
 CREATE TABLE `followers` (
   `uid` varchar(20) NOT NULL,
@@ -25,14 +13,37 @@ CREATE TABLE `followers` (
 
 DROP TABLE IF EXISTS `tweets`;
 CREATE TABLE `tweets` (
-  `tid` int(11) NOT NULL AUTO_INCREMENT,
+  `tid` int NOT NULL AUTO_INCREMENT,
   `uid` varchar(20) DEFAULT NULL,
   `postdatetime` timestamp NULL DEFAULT NULL,
   `content` varchar(100) DEFAULT NULL,
-  `pid` int(11) DEFAULT NULL,
+  `pid` int DEFAULT NULL,
+  `likes` int DEFAULT NULL,
   PRIMARY KEY (`tid`),
   KEY `tweets_users_fk` (`uid`),
   KEY `tweets_tweets_fk` (`pid`),
   CONSTRAINT `tweets_tweets_fk` FOREIGN KEY (`pid`) REFERENCES `tweets` (`tid`),
   CONSTRAINT `tweets_users_fk` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=294 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+DROP TABLE IF EXISTS `users`;
+create table `users`(
+   ID INT NOT NULL AUTO_INCREMENT,
+   uid VARCHAR(24) NOT NULL,
+   email VARCHAR(24) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   salt VARCHAR(24) NOT NULL,
+   submission_date DATETIME,
+   PRIMARY KEY ( ID ),
+   UNIQUE KEY ( uid,email )
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `likes`;
+CREATE TABLE `likes` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `tweet_ID` int NOT NULL,
+  `uid` varchar(24) NOT NULL,
+  `like_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY ( `tweet_ID`,`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

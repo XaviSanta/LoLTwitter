@@ -9,11 +9,24 @@ public class Tweets implements java.io.Serializable {
 	 private String uid;
 	 private Timestamp postDateTime;
 	 private String content;
+	 private Integer likes;
 
 	 public Tweets() {
+		 likes = 1;
 	 }
 
-	 public Integer getTid() {
+	 
+	 public Integer getLikes() {
+		return likes;
+	}
+
+
+	public void setLikes(Integer likes) {
+		this.likes = likes;
+	}
+
+
+	public Integer getTid() {
 		 return this.tid;
 	 }
 	 
