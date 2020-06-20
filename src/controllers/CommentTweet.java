@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.Console;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
@@ -40,7 +41,8 @@ public class CommentTweet extends HttpServlet {
 
 	        try {
 	            BeanUtils.populate(alikm, request.getParameterMap());
-
+	            //System.out.println(alikm.getTid());
+	            System.out.println(alikm.getUid());
 	            ManageTweets tweetManager = new ManageTweets();
 	            //likeManager.addLike(alikm.getTid(), alikm.getUid(), new Timestamp(System.currentTimeMillis()));
 	            //likeManager.finalize();
