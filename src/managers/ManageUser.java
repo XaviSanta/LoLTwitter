@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import java.util.Random;
+
 public class ManageUser {
 	
 	private DAO db = null ;
@@ -112,6 +114,7 @@ public class ManageUser {
 		String query = "SELECT password,salt "
 				+ "from ts1.users "
 				+ "WHERE uid='"+ login.getUser() + "'";
+
 		try {
 			ResultSet rs = db.executeSQL(query);
 			if (rs.next()) {
@@ -147,6 +150,7 @@ public class ManageUser {
 	}
 	
 	// Add new user
+
 	public boolean addUser(User user) {
 		Random rand = new Random();
 		
@@ -156,7 +160,6 @@ public class ManageUser {
 		String query = "INSERT INTO users "
 				+ "(uid, email, password, salt, submission_date) "
 				+ "VALUES (?,?,"+hashedUsername+",?,NOW())";
-		
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);

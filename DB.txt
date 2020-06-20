@@ -47,5 +47,3 @@ CREATE TABLE `likes` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY ( `tweet_ID`,`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
-
-
