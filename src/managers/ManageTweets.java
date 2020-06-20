@@ -217,7 +217,7 @@ public class ManageTweets {
 	
 	// Get tweets from a user given start and end
 	public List<Tweets> getUserTweets(String uid,Integer start, Integer end) {
-		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content, tweets.likes FROM tweets where tweets.uid LIKE ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
+		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content,tweets.likes FROM tweets where tweets.uid LIKE ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
 		 try {
