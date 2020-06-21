@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,20 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import managers.ManageTweets;
-import models.Tweets;
+import managers.ManageFollow;
+import models.Follower;
 
 /**
- * Servlet implementation class DelTweetFromUser
+ * Servlet implementation class GetFollows
  */
-@WebServlet("/DelTweetFromUser")
-public class DelTweetFromUser extends HttpServlet {
+@WebServlet("/FollowUserController")
+public class FollowUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DelTweetFromUser() {
+    public FollowUserController() {
         super();
     }
 
@@ -32,13 +31,12 @@ public class DelTweetFromUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Tweets tweet = new Tweets();
-		
+		Follower follower = new Follower();
 		try {
-			BeanUtils.populate(tweet, request.getParameterMap());
-			ManageTweets tweetManager = new ManageTweets();
-			tweetManager.deleteTweet(tweet.getTid());
-			tweetManager.finalize();
+			BeanUtils.populate(follower, request.getParameterMap());
+			ManageFollow followManager = new ManageFollow();
+			followManager.followUser(follower.getUid(), follower.getFid());
+			followManager.finalize();
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
@@ -48,6 +46,7 @@ public class DelTweetFromUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

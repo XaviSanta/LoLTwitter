@@ -106,6 +106,23 @@ $(document).ready(function(){
 		});
 	});
 
+	//add likes:
+	$("body").on("click",".alik",function(event){
+		event.preventDefault();
+		var tweet = $(this).parent();
+		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid:uid } , function(data) {
+			
+   		});
+	});
+
+	// Follow user
+	$("body").on("click",".follow",function(event){
+		event.preventDefault();
+		var tweet = $(this).parent();
+		$.post( "FollowUserController", {uid:uid, fid:tweet.attr("uid")} , function(data) {
+			
+   		});
+	});
 });
 </script>
 

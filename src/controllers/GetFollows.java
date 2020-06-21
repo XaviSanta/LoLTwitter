@@ -43,7 +43,6 @@ public class GetFollows extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 		String user = (String) session.getAttribute("user");
-		
 		try {
 			BeanUtils.populate(dt, request.getParameterMap());
 			ManageUser userManager = new ManageUser();
