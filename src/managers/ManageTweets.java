@@ -114,22 +114,15 @@ public class ManageTweets {
 	public void likeTweet(Integer tid) {
 		// Note that this is done using https://www.arquitecturajava.com/jdbc-prepared-statement-y-su-manejo/
 		String query = "UPDATE tweets SET likes = likes +1 WHERE tid= ?;";
-	
-		
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
 			statement.setInt(1,tid);
 			statement.executeUpdate();
 			statement.close();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
-		
-		
-		
 	}
 	
 	
