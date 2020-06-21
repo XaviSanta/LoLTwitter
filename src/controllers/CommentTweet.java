@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 
 import managers.ManageTweets;
+import models.Tweets;
 import models.alikModel;
 
 /**
@@ -37,16 +38,13 @@ public class CommentTweet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		 alikModel alikm = new alikModel();
+		 Tweets tweet = new Tweets();
 
 	        try {
-	            BeanUtils.populate(alikm, request.getParameterMap());
-	            //System.out.println(alikm.getTid());
-	            System.out.println(alikm.getUid());
+	            BeanUtils.populate(tweet, request.getParameterMap());
 	            ManageTweets tweetManager = new ManageTweets();
-	            //likeManager.addLike(alikm.getTid(), alikm.getUid(), new Timestamp(System.currentTimeMillis()));
-	            //likeManager.finalize();
-	            tweetManager.addComment(alikm.getUid(), new Timestamp(System.currentTimeMillis()), alikm.getComment(), alikm.getTid());
+	            tweetManager.addComment(tweet.getUid(), new Timestamp(System.currentTimeMillis()), tweet.getContent(), tweet.getTid());
+	            tweetManager.finalize();
 
 	        } catch (IllegalAccessException | InvocationTargetException e) {
 	            // TODO Auto-generated catch block

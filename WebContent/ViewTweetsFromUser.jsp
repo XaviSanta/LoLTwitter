@@ -13,6 +13,9 @@
     <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
     <span class="w3-right w3-opacity"> ${t.postDateTime} </span>
     <h4> ${t.uid} </h4>
+    <c:if test="${t.pid}">
+    	<p>Mierda</p> 
+    </c:if>
     <c:if test="${t.uid != user}">
     	<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button> 
     </c:if>

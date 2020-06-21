@@ -6,6 +6,7 @@ public class Tweets implements java.io.Serializable {
 	 private static final long serialVersionUID = 1L;
 
 	 private Integer tid;
+	 private Integer pid;
 	 private String uid;
 	 private Timestamp postDateTime;
 	 private String content;
@@ -42,6 +43,8 @@ public class Tweets implements java.io.Serializable {
 		 this.uid = uid;
 	 }
 	 
+	 
+	 
 	 public Timestamp getPostDateTime() {
 		 return this.postDateTime;
 	 }
@@ -55,5 +58,16 @@ public class Tweets implements java.io.Serializable {
 	 public void setContent(String content) {
 		 this.content = content;
 	 }
+
+
+	public Integer getPid() {
+		return pid;
+	}
+
+
+	public void setPid(Integer pid) {
+		
+		this.pid = pid;
+	}
 
 }
