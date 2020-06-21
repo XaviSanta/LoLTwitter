@@ -2,7 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<c:forEach var="t" items="${tweets}">       
+<c:forEach var="t" items="${tweets}">  
+<c:forEach var="u" items="${users}">      
+  <c:if test="${u.uid===t.uid}">
   <div 
 	id="${t.tid}" 
 	uid="${t.uid}"
@@ -10,7 +12,8 @@
 	 
 	<br>
 	
-	<img src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+	
+	<img src="'${u.profileImage}"' alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
 	<span class="w3-right w3-opacity"> ${t.postDateTime} </span>
 	<span style="font-weight:bold;font-size:large"> ${t.uid} </span>
 	<span style="color:gray">#${t.tid}</span>
@@ -26,5 +29,8 @@
 	<button type="button" class="dT w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>
 	<input type="text" class="cM w3-border w3-padding w3-margin-bottom" maxlength="1000" name="comment" placeholder="Write comment" required>
 	<button type="button" class="comment w3-button w3-theme w3-margin-bottom"><i class="fa fa-pencil"></i> &nbsp;Post Comment</button>
+	
  </div>
+ </c:if>
+ </c:forEach>
 </c:forEach>

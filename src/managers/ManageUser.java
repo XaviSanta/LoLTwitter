@@ -38,7 +38,7 @@ public class ManageUser {
 	
 	// Get a user given its PK
 	public User getUser(String uid) {
-		String query = "SELECT uid FROM users WHERE uid = ? ;";
+		String query = "SELECT * FROM users WHERE uid = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		User user = null;
@@ -156,14 +156,15 @@ public class ManageUser {
 		int salt = rand.nextInt(2147483647);
 		String hashedUsername = "SHA2(CONCAT('"+user.getPassword()+"','"+salt+"'),512)";
 		String query = "INSERT INTO users "
-				+ "(uid, email, password, salt, submission_date) "
-				+ "VALUES (?,?,"+hashedUsername+",?,NOW())";
+				+ "(uid, email, profileImage, password, salt, submission_date) "
+				+ "VALUES (?,?,?,"+hashedUsername+",?,NOW())";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
 			statement.setString(1,user.getUser());
 			statement.setString(2,user.getMail());
-			statement.setInt(3, salt);
+			statement.setInt(4, salt);
+			statement.setString(3, "https://www.w3schools.com/w3images/avatar2.png");
 			statement.executeUpdate();
 			statement.close();
 			return true;

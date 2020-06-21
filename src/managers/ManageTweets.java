@@ -77,7 +77,7 @@ public class ManageTweets {
 	/* Add a tweet comment */
 	public void addComment(String uid, Timestamp postDateTime, String content, Integer pid ) {
 		// Note that this is done using https://www.arquitecturajava.com/jdbc-prepared-statement-y-su-manejo/
-		String query = "INSERT INTO tweets (uid,postdatetime,content,pid) VALUES (?,?,?,?)";
+		String query = "INSERT INTO tweets (uid,postdatetime,content,pid,likes) VALUES (?,?,?,?,0)";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
