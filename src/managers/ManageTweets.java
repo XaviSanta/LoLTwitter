@@ -221,7 +221,11 @@ public class ManageTweets {
 	
 	// Get tweets from a user given start and end
 	public List<Tweets> getUserTweets(String uid,Integer start, Integer end) {
-		 String query = "SELECT * FROM tweets where tweets.uid LIKE ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
+		 String query = "SELECT * "
+		 		+ "FROM tweets "
+		 		+ "WHERE tweets.uid LIKE ? "
+		 		+ "ORDER BY tweets.postdatetime "
+		 		+ "DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
 		 try {
@@ -231,8 +235,6 @@ public class ManageTweets {
 			 statement.setInt(3,end);
 			 ResultSet rs = statement.executeQuery();
 			 while (rs.next()) {
-				 Integer a = rs.getInt("pid");
-				 System.out.println(a);
 				 Tweets tweet = new Tweets();
        		     tweet.setTid(rs.getInt("tid"));
 				 tweet.setUid(rs.getString("uid"));

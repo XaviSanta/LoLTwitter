@@ -1,6 +1,7 @@
 package managers;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 import utils.DAO;
 
 public class ManageFollow {

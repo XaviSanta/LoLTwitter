@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import java.util.Random;
-
 public class ManageUser {
 	
 	private DAO db = null ;
@@ -184,10 +182,6 @@ public class ManageUser {
 	
 	private boolean hasValue(String val) {
 		return((val != null) && (!val.equals("")));
-	}
-	
-	private String hashString() {
-		return "";
 	}
 	
 	public static String encryptThisString(String input) 

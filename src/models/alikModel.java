@@ -1,9 +1,6 @@
 package models;
 
-import java.sql.Timestamp;
-
 public class alikModel {
-
     private static final long serialVersionUID = 1L;
     private Integer tid;
     private String uid; // user who gives the like
