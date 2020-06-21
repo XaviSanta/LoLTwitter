@@ -99,6 +99,12 @@ $(document).ready(function(){
 			start = start - 1;
 	  	});
 	});
+	
+	$("body").on("click",".bf", function(event){
+		event.preventDefault();
+		$.post( "GetUserInfo", {user: $("#sf").text() } , function(data){
+		});
+	});
 
 });
 </script>
