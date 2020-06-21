@@ -7,14 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Like;
-import models.Tweets;
 import utils.DAO;
 
 public class ManageLike {
-
-	
-	private DAO db = null ;
-	
+	private DAO db = null;
 	
 	public ManageLike() {
 		try {
