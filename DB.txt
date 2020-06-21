@@ -30,7 +30,7 @@ CREATE TABLE `tweets` (
   `tid` int NOT NULL AUTO_INCREMENT,
   `uid` varchar(20) DEFAULT NULL,
   `postdatetime` timestamp NULL DEFAULT NULL,
-  `content` varchar(100) DEFAULT NULL,
+  `content` varchar(1000) DEFAULT NULL,
   `pid` int DEFAULT NULL,
   `likes` int DEFAULT NULL,
   PRIMARY KEY (`tid`),
