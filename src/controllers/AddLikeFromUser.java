@@ -14,8 +14,6 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import managers.ManageLike;
 import managers.ManageTweets;
-import models.Like;
-import models.Tweets;
 import models.alikModel;
 
 /**
@@ -49,13 +47,9 @@ public class AddLikeFromUser extends HttpServlet {
 			
 			boolean succes = likeManager.addLike(alikm.getTid(), alikm.getUid(), new Timestamp(System.currentTimeMillis()));
 			if(succes) {
-				
 				manageTweet.likeTweet(alikm.getTid());
 			}
-			
-			
 			likeManager.finalize();
-
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,5 +63,4 @@ public class AddLikeFromUser extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

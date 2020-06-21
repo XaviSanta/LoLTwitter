@@ -40,13 +40,11 @@ public class GetTweetsFromUser extends HttpServlet {
 		
 		dTmodel dt = new dTmodel();
 		List<Tweets> tweets = Collections.emptyList();
-		
 		try {
 			BeanUtils.populate(dt, request.getParameterMap());
 			ManageTweets tweetManager = new ManageTweets();
 			tweets = tweetManager.getUserTweets(dt.getUid(),dt.getStart(),dt.getEnd());
 			tweetManager.finalize();
-		
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}

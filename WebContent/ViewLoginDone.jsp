@@ -25,10 +25,10 @@ $(document).ready(function(){
 		event.preventDefault();
 		if(Math.ceil($(window).scrollTop()) == $(document).outerHeight() - $(window).outerHeight()) {
 			$.post( cview , { uid: uid, start: start , end: start+nt } , function(data) {
-	    	  	$("#dtweets").append(data);
+	    		$("#dtweets").append(data);
 	    		start = start + nt;
-	   		});
-	    }
+			});
+		}
 	});
 	
 	// *******************************************************************************************//
@@ -67,7 +67,7 @@ $(document).ready(function(){
 				start = nt;
 				cview = "GetTweetsFromUser";
 			});
-   		});
+		});
 	});
 	
 	/* Comment on tweet*/
@@ -75,8 +75,6 @@ $(document).ready(function(){
 	$("body").on("click",".comment",function(event){
         event.preventDefault();
         var tweet = $(this).parent();
-        console.log('The texto is: ', $(".cM"));
-        console.log(tweet.find(".cM:first").val());
         $.post( "CommentTweet", {tid: $(this).parent().attr("id"), uid:uid, content: tweet.find(".cM:first").val() } , function(data) {
         	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
 				start = nt;
@@ -98,7 +96,7 @@ $(document).ready(function(){
 		$.post( "DelTweetFromUser", { tid: $(this).parent().attr("id") } , function(data) {
 			tweet.remove();
 			start = start - 1;
-	  	});
+		});
 	});
 	
 	$("body").on("click",".bf", function(event){
@@ -113,16 +111,27 @@ $(document).ready(function(){
 		var tweet = $(this).parent();
 		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid:uid } , function(data) {
 			
-   		});
+		});
 	});
 
 	// Follow user
 	$("body").on("click",".follow",function(event){
 		event.preventDefault();
+		var followBtn = $(this);
 		var tweet = $(this).parent();
 		$.post( "FollowUserController", {uid:uid, fid:tweet.attr("uid")} , function(data) {
-			
-   		});
+			followBtn.hide();
+		});
+	});
+	
+	// Follow user
+	$("body").on("click",".unfollow",function(event){
+		event.preventDefault();
+		var user = $(this).parent();
+		$.post( "UnfollowUserController", {uid:uid, fid:user.attr("id")} , function(data) {
+			user.remove();
+			start = start - 1;
+		});
 	});
 });
 </script>
