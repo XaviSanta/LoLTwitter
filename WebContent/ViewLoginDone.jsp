@@ -70,11 +70,28 @@ $(document).ready(function(){
    		});
 	});
 	
+	/* Comment on tweet*/
+
+	$("body").on("click",".comment",function(event){
+        event.preventDefault();
+        var tweet = $(this).parent();
+        console.log('The texto is: ', $(".cM"));
+        console.log(tweet.find(".cM:first").val());
+        $.post( "CommentTweet", {tid: $(this).parent().attr("id"), uid:uid, content: tweet.find(".cM:first").val() } , function(data) {
+        	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
+				start = nt;
+				cview = "GetTweetsFromUser";
+			});
+       	});
+    });
+	
+	
 	// ***************************************************************************************************//
 	// Elements $("body").on("click","...)  caputure clicks of elements that have been dinamically loaded //
 	// ***************************************************************************************************//
 	
 	/* Delete tweet from user */
+	
 	$("body").on("click",".dT",function(event){
 		event.preventDefault();
 		var tweet = $(this).parent();
@@ -84,6 +101,12 @@ $(document).ready(function(){
 	  	});
 	});
 	
+	$("body").on("click",".bf", function(event){
+		event.preventDefault();
+		$.post( "GetUserInfo", {user: $("#sf").text() } , function(data){
+		});
+	});
+
 	//add likes:
 	$("body").on("click",".alik",function(event){
 		event.preventDefault();

@@ -157,29 +157,31 @@ public class ManageTweets {
 	}
 	
 	/* Get tweet comments */
-	public Tweets getTweetComments(Integer tid) {
+	public List<Tweets> getTweetComments(Integer tid) {
 		String query = "SELECT tid,uid,postDateTime,content FROM tweets WHERE pid = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		Tweets tweet = null;
+		List<Tweets> l = new ArrayList<Tweets>();
+		
 		try {
 			statement = db.prepareStatement(query);
 			statement.setInt(1,tid);
 			rs = statement.executeQuery();
-			if (rs.next()) {
-				tweet = new Tweets();
-				tweet.setTid(rs.getInt("tid"));
-				tweet.setUid(rs.getString("uid"));
-				tweet.setPostDateTime(rs.getTimestamp("postDateTime"));
-				tweet.setContent(rs.getString("content"));
+			while (rs.next()) {
+					Tweets tweet = new Tweets();
+					tweet = new Tweets();
+					tweet.setTid(rs.getInt("tid"));
+					tweet.setUid(rs.getString("uid"));
+					tweet.setPostDateTime(rs.getTimestamp("postDateTime"));
+					tweet.setContent(rs.getString("content"));
+					l.add(tweet);
 			}
 			rs.close();
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return tweet;
+		return l;
 	}
 	
 	// Get tweets from a user
@@ -187,6 +189,7 @@ public class ManageTweets {
 		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content FROM tweets where tweets.uid = ? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
+		 List<Tweets> commentList = new ArrayList<Tweets>();
 		 try {
 			 statement = db.prepareStatement(query);
 			 statement.setString(1,uid);
@@ -198,6 +201,14 @@ public class ManageTweets {
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
 				 l.add(tweet);
+				 commentList = getTweetComments(rs.getInt("tid"));
+				 int iterator = 0;
+				 while(!commentList.isEmpty() && commentList.size()<iterator) 
+				 {
+					 l.add(commentList.get(iterator));
+					 
+					 iterator++;
+				 }
 			 }
 			 rs.close();
 			 statement.close();
@@ -210,7 +221,7 @@ public class ManageTweets {
 	
 	// Get tweets from a user given start and end
 	public List<Tweets> getUserTweets(String uid,Integer start, Integer end) {
-		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content,tweets.likes FROM tweets where tweets.uid LIKE ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
+		 String query = "SELECT * FROM tweets where tweets.uid LIKE ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
 		 try {
@@ -220,9 +231,12 @@ public class ManageTweets {
 			 statement.setInt(3,end);
 			 ResultSet rs = statement.executeQuery();
 			 while (rs.next()) {
+				 Integer a = rs.getInt("pid");
+				 System.out.println(a);
 				 Tweets tweet = new Tweets();
        		     tweet.setTid(rs.getInt("tid"));
 				 tweet.setUid(rs.getString("uid"));
+				 tweet.setPid(rs.getInt("pid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
 				 tweet.setLikes(rs.getInt("likes"));
