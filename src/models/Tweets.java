@@ -70,4 +70,6 @@ public class Tweets implements java.io.Serializable {
 		this.pid = pid;
 	}
 
+
+
 }

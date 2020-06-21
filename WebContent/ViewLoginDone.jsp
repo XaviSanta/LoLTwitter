@@ -76,7 +76,8 @@ $(document).ready(function(){
         event.preventDefault();
         var tweet = $(this).parent();
         console.log('The texto is: ', $(".cM"));
-        $.post( "CommentTweet", {tid: $(this).parent().attr("id"), uid:uid, content: $(".cM").val() } , function(data) {
+        console.log(tweet.find(".cM:first").val());
+        $.post( "CommentTweet", {tid: $(this).parent().attr("id"), uid:uid, content: tweet.find(".cM:first").val() } , function(data) {
         	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
 				start = nt;
 				cview = "GetTweetsFromUser";

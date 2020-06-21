@@ -12,9 +12,10 @@
 	
 	<img src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
 	<span class="w3-right w3-opacity"> ${t.postDateTime} </span>
-	<h4> ${t.uid} </h4>
+	<span style="font-weight:bold;font-size:large"> ${t.uid} </span>
+	<span style="color:gray">#${t.tid}</span>
 	<c:if test="${t.pid!=0}">
-		<p>Tweet in response to ${t.pid}</p> 
+		<p class="parentContent">Tweet in response to ${t.uid}'s tweet \#${t.pid}</p> 
 	</c:if>
 	<c:if test="${t.uid != user}">
 		<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button> 
@@ -23,7 +24,7 @@
 	<p> ${t.content} </p>
 	<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>&nbsp;<span> ${t.likes} </span></button> 
 	<button type="button" class="dT w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>
-	<input type="text" class="cM w3-border w3-padding" name="comment" placeholder="Write comment" required>
-	<button type="button" class="comment w3-button w3-theme"><i class="fa fa-pencil"></i> &nbsp;Post Comment</button>
+	<input type="text" class="cM w3-border w3-padding w3-margin-bottom" maxlength="1000" name="comment" placeholder="Write comment" required>
+	<button type="button" class="comment w3-button w3-theme w3-margin-bottom"><i class="fa fa-pencil"></i> &nbsp;Post Comment</button>
  </div>
 </c:forEach>
