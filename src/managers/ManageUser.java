@@ -122,6 +122,7 @@ public class ManageUser {
 			 while (rs.next()) {
 				 User user = new User();
 				 user.setUser(rs.getString("uid"));
+				 user.setProfilePicture(getProfilePicture(rs.getString("uid")));
 				 // user.setName(rs.getString("name"));
 				 l.add(user);
 			 }
@@ -190,7 +191,7 @@ public class ManageUser {
 			statement.setString(1,user.getUser());
 			statement.setString(2,user.getMail());
 			statement.setInt(4, salt);
-			statement.setString(3, "https://www.w3schools.com/w3images/avatar2.png");
+			statement.setString(3, "https://www.w3schools.com/w3images/avatar3.png");
 			statement.executeUpdate();
 			statement.close();
 			return true;
