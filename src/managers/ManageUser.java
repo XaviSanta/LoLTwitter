@@ -50,6 +50,7 @@ public class ManageUser {
 				user = new User();
 				user.setUser(rs.getString("uid"));
 				user.setProfilePicture(rs.getString("profilePicture"));
+				user.setAdmin(rs.getBoolean("isAdmin"));
 				// user.setName(rs.getString("name"));
 			}
 			rs.close();
@@ -200,6 +201,8 @@ public class ManageUser {
 			return false;
 		}
 	}
+	
+	
 	
 	/*Check if all the fields are filled correctly */
 	public boolean isComplete(User user) {

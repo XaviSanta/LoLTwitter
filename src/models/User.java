@@ -12,6 +12,7 @@ public class User implements java.io.Serializable {
 	private String password = "";
 	private String password2 = "";
 	private String profilePicture="";
+	private boolean isAdmin=false;
 	private boolean[] error  = {false,false,false,false};
 	
 	/* Getters */
@@ -92,5 +93,13 @@ public class User implements java.io.Serializable {
 
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

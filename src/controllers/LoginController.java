@@ -50,7 +50,10 @@ public class LoginController extends HttpServlet {
 	    		if (manager.isCorrectLogin(login)) {
 	    			System.out.println("login OK, forwarding to ViewLoginDone ");
 			    	HttpSession session = request.getSession();
-			    	session.setAttribute("user",login.getUser());
+			    	String uid = login.getUser();
+			    	session.setAttribute("user", uid);
+			    	session.setAttribute("isAdmin", manager.getUser(uid).isAdmin());
+			    	System.out.println(session.getAttribute("isAdmin"));
 			    	System.out.println(session);
 			    	view = "ViewLoginDone.jsp";
 	    		} else {
