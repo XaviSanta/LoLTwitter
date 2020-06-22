@@ -50,7 +50,6 @@ public class ManageUser {
 				user = new User();
 				user.setUser(rs.getString("uid"));
 				user.setProfilePicture(rs.getString("profilePicture"));
-
 				// user.setName(rs.getString("name"));
 			}
 			rs.close();

@@ -3,7 +3,8 @@
 
 
 <div class="w3-bar w3-indigo">
-	<a class="w3-bar-item w3-button" id="LogoutController" href="MainController"> <i class="fa fa-home" aria-hidden="true"></i> </a>
+	<a class="w3-bar-item w3-button" id="LogoutController" href="MainController" title="Profile"> <i class="fa fa-user" aria-hidden="true"></i> </a>
+	<a href="#" class="vFT w3-bar-item w3-button w3-hide-small w3-hover-white" title="Home"><i class="fa fa-home"></i></a>
 	<a href="#" class="vF w3-bar-item w3-button w3-hide-small w3-hover-white" title="Friends"><i class="fa fa-users"></i></a>
 	<a href="#" class="vW w3-bar-item w3-button w3-hide-small w3-hover-white" title="Explore"><i class="fa fa-globe"></i></a>
 	<a class="menu w3-bar-item w3-button w3-hide-small w3-right" id="LogoutController" href=#> Logout </a>

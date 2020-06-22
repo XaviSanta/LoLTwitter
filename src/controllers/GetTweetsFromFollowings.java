@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -24,14 +23,14 @@ import models.dTmodel;
 /**
  * Servlet implementation class dTcontroller
  */
-@WebServlet("/GetTweetsFromUser")
-public class GetTweetsFromUser extends HttpServlet {
+@WebServlet("/GetTweetsFromFollowings")
+public class GetTweetsFromFollowings extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetTweetsFromUser() {
+    public GetTweetsFromFollowings() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,34 +44,27 @@ public class GetTweetsFromUser extends HttpServlet {
 		List<Tweets> tweets = Collections.emptyList();
 		
 		try {
-			HttpSession session = request.getSession(false);
-			if (session==null || session.getAttribute("user")==null) { // Anonymous user can see up to 20 tweets
-				ManageTweets tweetManager = new ManageTweets();
-				tweets = tweetManager.getUserTweets("%",0,20);
-				tweetManager.finalize();
-			} else {
-				BeanUtils.populate(dt, request.getParameterMap());
-				ManageTweets tweetManager = new ManageTweets();
-				tweets = tweetManager.getUserTweets(dt.getUid(),dt.getStart(),dt.getEnd());
-				tweetManager.finalize();
-			}
+			BeanUtils.populate(dt, request.getParameterMap());
+			ManageTweets tweetManager = new ManageTweets();
+			tweets = tweetManager.getFollowsTweets(dt.getUid(),dt.getStart(),dt.getEnd());
+			tweetManager.finalize();
 			
 			ManageUser userManager = new ManageUser();
 			for(int i=0;i<tweets.size();i++) 
 			{
 				String uid = tweets.get(i).getUid();
 				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));			
-			}		
+			}
+			
 			userManager.finalize();
+			
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 
-		
 		request.setAttribute("tweets", tweets);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetsFromUser.jsp"); 
 		dispatcher.forward(request,response);
-		
 	}
 
 	/**
