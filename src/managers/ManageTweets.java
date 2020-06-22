@@ -254,7 +254,11 @@ public class ManageTweets {
 	
 	// Get tweets from user follows
 	public List<Tweets> getFollowsTweets(String uid) {
-		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content FROM tweets JOIN followers ON followers.fid = tweets.uid WHERE followers.uid = ? ;";
+		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content,tweets.likes "
+		 		+ "FROM tweets "
+		 		+ "JOIN followers "
+		 		+ "ON followers.fid = tweets.uid "
+		 		+ "WHERE followers.uid = ? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
 		 try {
@@ -267,6 +271,7 @@ public class ManageTweets {
 				 tweet.setUid(rs.getString("uid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
@@ -279,7 +284,11 @@ public class ManageTweets {
 	
 	// Get tweets from user follows start and end
 	public List<Tweets> getFollowsTweets(String uid, Integer start, Integer end) {
-		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content FROM tweets JOIN followers ON followers.fid = tweets.uid WHERE followers.uid = ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
+		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content,tweets.likes "
+		 		+ "FROM tweets JOIN followers ON followers.fid = tweets.uid "
+		 		+ "WHERE followers.uid = ? "
+		 		+ "ORDER BY tweets.postdatetime "
+		 		+ "DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
 		 try {
@@ -294,6 +303,7 @@ public class ManageTweets {
 				 tweet.setUid(rs.getString("uid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
@@ -318,6 +328,7 @@ public class ManageTweets {
 				 tweet.setUid(rs.getString("uid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
