@@ -51,6 +51,8 @@ public class ManageUser {
 				user.setUser(rs.getString("uid"));
 				user.setProfilePicture(rs.getString("profilePicture"));
 				user.setAdmin(rs.getBoolean("isAdmin"));
+				user.setLolUsername(rs.getString("lolUsername"));
+				user.setMainChampion(rs.getString("mainChampion"));
 				// user.setName(rs.getString("name"));
 			}
 			rs.close();
@@ -85,7 +87,7 @@ public class ManageUser {
 		return aux;
 	}
 	
-	// Get profile image from user
+	// Set profile image from user
 	public void setProfilePicture(String URL, String uid) {
 		String query = "UPDATE users "
 				+ "SET profilePicture = ?"
@@ -95,6 +97,24 @@ public class ManageUser {
 			statement = db.prepareStatement(query);
 			statement.setString(1,URL);
 			statement.setString(2,uid);
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Set profile info
+	public void setProfileInfo(String uid, String lolusername, String mainChampion) {
+		String query = "UPDATE users "
+				+ "SET lolUsername = ?, mainChampion= ?"
+				+ "WHERE uid=?;";
+		PreparedStatement statement = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,lolusername);
+			statement.setString(2,mainChampion);
+			statement.setString(3,uid);
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLException e) {

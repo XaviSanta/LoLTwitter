@@ -13,6 +13,7 @@
 
 
 <div id="stack" class="w3-bar-block w3-indigo w3-hide w3-hide-large w3-hide-medium">
+	<a class="vFT w3-bar-item w3-button" href=#> Feed </a>
 	<a class="vF w3-bar-item w3-button" href=#> Friends </a>
 	<a class="vW w3-bar-item w3-button" href=#> Explore </a>
 	<a class="menu w3-bar-item w3-button" id="LogoutController" href=#> Logout </a>
