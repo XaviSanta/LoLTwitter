@@ -51,6 +51,14 @@ $(document).ready(function(){
 			cview = "GetTweetsFromUser";
 		});
 	});
+	/* Get and visualize Tweets from a followings */
+	$(".vFT").click(function(event){
+		event.preventDefault();
+		$("#dtweets").load( "GetTweetsFromFollowings", { uid: uid, start: 0 , end: nt } , function(data) {
+			start = nt;
+			cview = "GetTweetsFromUser";
+		});
+	});
 	/* Get and visualize Tweets from around the world*/
 	$(".vW").click(function(event){
 		event.preventDefault();
