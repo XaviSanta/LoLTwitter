@@ -41,6 +41,7 @@ public class GetUserInfo extends HttpServlet {
 			BeanUtils.populate(user, request.getParameterMap());
 			ManageUser userManager = new ManageUser();
 			user = userManager.getUser(user.getUser());
+			System.out.println(user.getUser());
 			
 			userManager.finalize();
 		} catch (IllegalAccessException | InvocationTargetException e) {

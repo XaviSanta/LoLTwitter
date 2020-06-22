@@ -11,7 +11,7 @@
 	<br>
 	<img src="${t.profilePicture}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
 	<span class="w3-right w3-opacity"> ${t.postDateTime} </span>
-	<span style="font-weight:bold;font-size:large"> ${t.uid} </span>
+	<button class="perfil" style="background:none;border:none;font-weight:bold;font-size:large"> ${t.uid} </button>
 	<span style="color:gray">#${t.tid}</span>
 	<c:if test="${t.pid!=0}">
 		<p class="parentContent">Tweet in response to ${t.uid}'s tweet \#${t.pid}</p> 
