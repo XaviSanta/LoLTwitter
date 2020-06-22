@@ -11,7 +11,7 @@ public class User implements java.io.Serializable {
 	private String mail = "";
 	private String password = "";
 	private String password2 = "";
-	private String profileImage="";
+	private String profilePicture="";
 	private boolean[] error  = {false,false,false,false};
 	
 	/* Getters */
@@ -86,11 +86,11 @@ public class User implements java.io.Serializable {
 		return((val != null) && (!val.equals("")));
 	}
 
-	public String getProfileImage() {
-		return profileImage;
+	public String getProfilePicture() {
+		return profilePicture;
 	}
 
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 }

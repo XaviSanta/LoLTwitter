@@ -56,15 +56,13 @@ public class GetTweetsFromUser extends HttpServlet {
 		
 		for(int i=0;i<tweets.size();i++) 
 		{
-			if(!users.contains(userManager.getUser(tweets.get(i).getUid()))) 
-			{
-				users.add(userManager.getUser(tweets.get(i).getUid()));
-			}
+			String uid = tweets.get(i).getUid();
+			tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));			
 		}		
 		userManager.finalize();
 		
 		request.setAttribute("tweets", tweets);
-		request.setAttribute("users", users);
+
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetsFromUser.jsp"); 
 		dispatcher.forward(request,response);

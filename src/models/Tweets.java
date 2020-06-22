@@ -12,6 +12,7 @@ public class Tweets implements java.io.Serializable {
 	private Timestamp postDateTime;
 	private String content;
 	private Integer likes;
+	private String profilePicture;
 	private boolean isFollowed;
 
 	public Tweets() {
@@ -72,5 +73,13 @@ public class Tweets implements java.io.Serializable {
 
 	public void setPid(Integer pid) {
 		this.pid = pid;
+	}
+
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 }

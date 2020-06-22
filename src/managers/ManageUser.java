@@ -49,6 +49,8 @@ public class ManageUser {
 			if (rs.next()) {
 				user = new User();
 				user.setUser(rs.getString("uid"));
+				user.setProfilePicture(rs.getString("profilePicture"));
+				System.out.println("The image of the user is:"+rs.getString("profileImage"));
 				// user.setName(rs.getString("name"));
 			}
 			rs.close();
@@ -59,6 +61,30 @@ public class ManageUser {
 		
 		return user;
 	}
+	
+	// Get profile image from user
+	
+	public String getProfilePicture(String uid) {
+		String query = "SELECT profilePicture FROM users WHERE uid = ? ;";
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String aux ="";
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,uid);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				aux = rs.getString("profilePicture");
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return aux;
+	}
+	
 	
 	// Get users a given user is following
 	public List<User> getUserFollows(String uid) {
@@ -156,7 +182,7 @@ public class ManageUser {
 		int salt = rand.nextInt(2147483647);
 		String hashedUsername = "SHA2(CONCAT('"+user.getPassword()+"','"+salt+"'),512)";
 		String query = "INSERT INTO users "
-				+ "(uid, email, profileImage, password, salt, submission_date) "
+				+ "(uid, email, profilePicture, password, salt, submission_date) "
 				+ "VALUES (?,?,?,"+hashedUsername+",?,NOW())";
 		PreparedStatement statement = null;
 		try {

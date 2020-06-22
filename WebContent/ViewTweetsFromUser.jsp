@@ -3,17 +3,13 @@
 
 
 <c:forEach var="t" items="${tweets}">  
-<c:forEach var="u" items="${users}">      
-  <c:if test="${u.uid===t.uid}">
   <div 
 	id="${t.tid}" 
 	uid="${t.uid}"
 	class="w3-container w3-card w3-white w3-round w3-margin w3-animate-opacity">
 	 
 	<br>
-	
-	
-	<img src="'${u.profileImage}"' alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+	<img src="${t.profilePicture}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
 	<span class="w3-right w3-opacity"> ${t.postDateTime} </span>
 	<span style="font-weight:bold;font-size:large"> ${t.uid} </span>
 	<span style="color:gray">#${t.tid}</span>
@@ -31,6 +27,4 @@
 	<button type="button" class="comment w3-button w3-theme w3-margin-bottom"><i class="fa fa-pencil"></i> &nbsp;Post Comment</button>
 	
  </div>
- </c:if>
- </c:forEach>
 </c:forEach>
