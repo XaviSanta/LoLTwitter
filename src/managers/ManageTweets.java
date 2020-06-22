@@ -93,17 +93,15 @@ public class ManageTweets {
 	}
 	
 	/* Update a tweet */
-	public void updateTweet(Integer tid, String uid, Timestamp postDateTime, String content) {
+	public void updateTweet(Integer tid, String content) {
 		// Note that this is done using https://www.arquitecturajava.com/jdbc-prepared-statement-y-su-manejo/
-		String query = "UPDATE tweets SET uid = ? , postDateTime = ? , content = ?  WHERE tid = ? ;";
+		String query = "UPDATE tweets SET content = ?  WHERE tid = ? ;";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
-			statement.setString(1,uid);
-			statement.setTimestamp(2,postDateTime);
-			statement.setString(3,content);
+			statement.setString(1,content);
+			statement.setInt(2,tid);
 			statement.executeUpdate();
-			statement.setInt(4,tid);
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
