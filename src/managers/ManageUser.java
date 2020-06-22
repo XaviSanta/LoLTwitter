@@ -38,7 +38,7 @@ public class ManageUser {
 	
 	// Get a user given its PK
 	public User getUser(String uid) {
-		String query = "SELECT uid FROM users WHERE uid = ? ;";
+		String query = "SELECT * FROM users WHERE uid = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		User user = null;
@@ -49,6 +49,7 @@ public class ManageUser {
 			if (rs.next()) {
 				user = new User();
 				user.setUser(rs.getString("uid"));
+				user.setProfilePicture(rs.getString("profilePicture"));
 				// user.setName(rs.getString("name"));
 			}
 			rs.close();
@@ -59,6 +60,30 @@ public class ManageUser {
 		
 		return user;
 	}
+	
+	// Get profile image from user
+	
+	public String getProfilePicture(String uid) {
+		String query = "SELECT profilePicture FROM users WHERE uid = ? ;";
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String aux ="";
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,uid);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				aux = rs.getString("profilePicture");
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return aux;
+	}
+	
 	
 	// Get users a given user is following
 	public List<User> getUserFollows(String uid) {
@@ -156,14 +181,15 @@ public class ManageUser {
 		int salt = rand.nextInt(2147483647);
 		String hashedUsername = "SHA2(CONCAT('"+user.getPassword()+"','"+salt+"'),512)";
 		String query = "INSERT INTO users "
-				+ "(uid, email, password, salt, submission_date) "
-				+ "VALUES (?,?,"+hashedUsername+",?,NOW())";
+				+ "(uid, email, profilePicture, password, salt, submission_date) "
+				+ "VALUES (?,?,?,"+hashedUsername+",?,NOW())";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
 			statement.setString(1,user.getUser());
 			statement.setString(2,user.getMail());
-			statement.setInt(3, salt);
+			statement.setInt(4, salt);
+			statement.setString(3, "https://www.w3schools.com/w3images/avatar2.png");
 			statement.executeUpdate();
 			statement.close();
 			return true;

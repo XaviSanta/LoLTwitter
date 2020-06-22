@@ -10,7 +10,11 @@ create table `users`(
    ID INT NOT NULL AUTO_INCREMENT,
    uid VARCHAR(24) NOT NULL,
    email VARCHAR(24) NOT NULL,
+<<<<<<< HEAD
    imageID VARCHAR(1000) NOT NULL ,
+=======
+   profilePicture VARCHAR(1000) NOT NULL ,
+>>>>>>> 84cdce0fcca231cd2f027c9c0ba9ee694385c10e
    password VARCHAR(255) NOT NULL,
    salt VARCHAR(24) NOT NULL,
    submission_date DATETIME,
