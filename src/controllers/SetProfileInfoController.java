@@ -16,16 +16,16 @@ import managers.ManageUser;
 import models.User;
 
 /**
- * Servlet implementation class GetUserInfo
+ * Servlet implementation class dTcontroller
  */
-@WebServlet("/GetUserInfo")
-public class GetUserInfo extends HttpServlet {
+@WebServlet("/SetProfileInfoController")
+public class SetProfileInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetUserInfo() {
+    public SetProfileInfoController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,24 +36,19 @@ public class GetUserInfo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		User user = new User();
-		
 		try {
 			BeanUtils.populate(user, request.getParameterMap());
 			ManageUser userManager = new ManageUser();
-			user = userManager.getUser(user.getUser());
-			System.out.println(user.getUser());
-			
+			userManager.setProfileInfo(user.getUser(), user.getLolUsername(), user.getMainChampion());
 			userManager.finalize();
+			
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 		
-		request.setAttribute("user",user);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewUserInfo.jsp"); 
-		dispatcher.include(request,response);
+		dispatcher.forward(request,response);
 	}
-	
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -156,6 +156,20 @@ $(document).ready(function(){
 		});
 	});
 
+	/* Update user info */
+	$("body").on("click",".updateInfo",function(event){
+		event.preventDefault();
+		var lolUsername = $(this).parent().find(".lolusername").val();
+		var mainChampion = $(this).parent().find(".mainchampion").val();
+		console.log(lolUsername);
+		console.log(mainChampion);
+		$.post( "SetProfileInfoController", { user:uid, lolUsername:lolUsername, mainChampion:mainChampion} , function(data) {
+			$("#duser").load( "GetUserInfo", { user: uid } ,function() {
+				cview = "GetUserInfo";
+			});
+		});
+	});
+	
 	/* Open Edit Tweet */
 	$("body").on("click",".editTw",function(event){
 		event.preventDefault();

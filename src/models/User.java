@@ -7,7 +7,9 @@ public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String user = ""; //UID
+	private String user = ""; //UID	
+	private String lolUsername = "";
+	private String mainChampion = "";
 	private String mail = "";
 	private String password = "";
 	private String password2 = "";
@@ -101,5 +103,21 @@ public class User implements java.io.Serializable {
 
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public String getLolUsername() {
+		return lolUsername;
+	}
+
+	public void setLolUsername(String lolUsername) {
+		this.lolUsername = lolUsername;
+	}
+
+	public String getMainChampion() {
+		return mainChampion;
+	}
+
+	public void setMainChampion(String mainChampion) {
+		this.mainChampion = mainChampion;
 	}
 }

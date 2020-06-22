@@ -9,11 +9,13 @@
    <button type="button" class="changePicture w3-button w3-theme w3-margin-bottom"><i class="fa fa-pencil"></i> &nbsp;Change picture</button>
 
    <hr>
-   <p id="uid"><i class="fa fa-id-card fa-fw w3-margin-right w3-text-theme"></i> ${user.user} </p>
-   <p id="name"><i class="fa fa-id-badge fa-fw w3-margin-right w3-text-theme"></i> ${user.user} </p>
+
    <c:if test="${isAdmin}">
-   		<button type="button" class="dU w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>
+      <button type="button" class="dU w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>
    </c:if>
+   <input type="text" class="lolusername w3-border w3-margin-bottom" maxlength="24" name="Profile picture" value="${user.lolUsername}" required>
+   <input type="text" class="mainchampion w3-border w3-margin-bottom" maxlength="24" name="Profile picture" value="${user.mainChampion}" required>
+   <button type="button" class="updateInfo w3-button w3-theme w3-margin-bottom"><i class="fa fa-pencil"></i> &nbsp;Update Info</button>
   </div>
 </div>
 <br>

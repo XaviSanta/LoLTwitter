@@ -9,6 +9,8 @@ DROP TABLE IF EXISTS `users`;
 create table `users`(
    ID INT NOT NULL AUTO_INCREMENT,
    uid VARCHAR(24) NOT NULL,
+   lolUsername VARCHAR(24),
+   mainChampion VARCHAR(24),
    email VARCHAR(24) NOT NULL,
    profilePicture VARCHAR(1000) NOT NULL ,
    password VARCHAR(255) NOT NULL,
