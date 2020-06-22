@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import managers.ManageTweets;
+import managers.ManageUser;
 import models.Tweets;
+import models.User;
 import models.dTmodel;
 
 /**
@@ -58,7 +60,19 @@ public class GetTweetsFromUser extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		request.setAttribute("tweets",tweets);
+		List<User> users = Collections.emptyList();
+		ManageUser userManager = new ManageUser();
+		
+		for(int i=0;i<tweets.size();i++) 
+		{
+			String uid = tweets.get(i).getUid();
+			tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));			
+		}		
+		userManager.finalize();
+		
+		request.setAttribute("tweets", tweets);
+
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetsFromUser.jsp"); 
 		dispatcher.forward(request,response);
 		
