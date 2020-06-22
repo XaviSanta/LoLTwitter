@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -40,11 +41,19 @@ public class GetTweetsFromUser extends HttpServlet {
 		
 		dTmodel dt = new dTmodel();
 		List<Tweets> tweets = Collections.emptyList();
+		
 		try {
-			BeanUtils.populate(dt, request.getParameterMap());
-			ManageTweets tweetManager = new ManageTweets();
-			tweets = tweetManager.getUserTweets(dt.getUid(),dt.getStart(),dt.getEnd());
-			tweetManager.finalize();
+			HttpSession session = request.getSession(false);
+			if (session==null || session.getAttribute("user")==null) { // Anonymous user can see up to 20 tweets
+				ManageTweets tweetManager = new ManageTweets();
+				tweets = tweetManager.getUserTweets("%",0,20);
+				tweetManager.finalize();
+			} else {
+				BeanUtils.populate(dt, request.getParameterMap());
+				ManageTweets tweetManager = new ManageTweets();
+				tweets = tweetManager.getUserTweets(dt.getUid(),dt.getStart(),dt.getEnd());
+				tweetManager.finalize();
+			}
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
