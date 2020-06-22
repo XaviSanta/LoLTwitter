@@ -82,6 +82,23 @@ $(document).ready(function(){
 	// Elements $("body").on("click","...)  caputure clicks of elements that have been dinamically loaded //
 	// ***************************************************************************************************//
 	
+	/* go to user perfil */
+	
+	$("body").on("click", ".perfil", function(event){
+		event.preventDefault();
+		var tweet = $(this).parent();
+		var target_user = tweet.attr("uid");
+		console.log(tweet.attr("uid"));
+		$.post( "GetUserInfo", {user: target_user } , function(data){
+	      	$("#dtweets").load( "GetTweetsFromUser", { uid: target_user, start: 0 , end: nt } ,function() {
+				start = nt;
+				cview = "GetTweetsFromUser";
+			});
+	      	$("#duser").load( "GetUserInfo", { user: target_user } ,function() {
+			});
+		});
+	});
+	
 	/* Delete tweet from user */
 	
 	$("body").on("click",".dT",function(event){
