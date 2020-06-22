@@ -51,7 +51,7 @@ $(document).ready(function(){
 			cview = "GetTweetsFromUser";
 		});
 	});
-	/* Get and visualize Tweets from a followings */
+	/* Get and visualize Tweets from followings */
 	$(".vFT").click(function(event){
 		event.preventDefault();
 		$("#dtweets").load( "GetTweetsFromFollowings", { uid: uid, start: 0 , end: nt } , function(data) {

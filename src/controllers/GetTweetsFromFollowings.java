@@ -61,7 +61,7 @@ public class GetTweetsFromFollowings extends HttpServlet {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
-
+		
 		request.setAttribute("tweets", tweets);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetsFromUser.jsp"); 
 		dispatcher.forward(request,response);
