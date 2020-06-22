@@ -14,6 +14,7 @@ create table `users`(
    password VARCHAR(255) NOT NULL,
    salt VARCHAR(24) NOT NULL,
    submission_date DATETIME,
+   administrator BIT NOT NULL DEFAULT 0,
    PRIMARY KEY ( ID ),
    UNIQUE KEY ( uid,email )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
