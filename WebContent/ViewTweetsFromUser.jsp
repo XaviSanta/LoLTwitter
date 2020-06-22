@@ -23,7 +23,9 @@
 	<p> ${t.content} </p>
 	<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>&nbsp;<span> ${t.likes} </span></button> 
 	<c:if test="${user != null}">
-		<button type="button" class="dT w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>
+		<c:if test="${isAdmin || t.uid == user}">
+			<button type="button" class="dT w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>
+		</c:if>
 		<input type="text" class="cM w3-border w3-padding w3-margin-bottom" maxlength="1000" name="comment" placeholder="Write comment" required>
 		<button type="button" class="comment w3-button w3-theme w3-margin-bottom"><i class="fa fa-pencil"></i> &nbsp;Post Comment</button>
 	</c:if>
