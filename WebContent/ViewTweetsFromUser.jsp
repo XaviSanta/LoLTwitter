@@ -25,10 +25,21 @@
 	<c:if test="${user != null}">
 		<c:if test="${isAdmin || t.uid == user}">
 			<button type="button" class="dT w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>
+			<button type="button" class="editTw w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-pencil"></i> &nbsp;Edit</button>
 		</c:if>
-		<input type="text" class="cM w3-border w3-padding w3-margin-bottom" maxlength="1000" name="comment" placeholder="Write comment" required>
-		<button type="button" class="comment w3-button w3-theme w3-margin-bottom"><i class="fa fa-pencil"></i> &nbsp;Post Comment</button>
+		<button type="button" class="replyTw w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-reply"></i> &nbsp;Reply</button>
 	</c:if>
-
+	
+	<div class="underTwEdit" style="display:none">
+		<hr class="w3-clear">
+		<p contenteditable="true" class="contentUnderTweet w3-border w3-padding"></p>
+        <button type="button" class="editPostBtn w3-button w3-theme"><i class="fa fa-paper-plane"></i> &nbsp;Edit</button> 
+	</div>
+	
+	<div class="underTwReply" style="display:none">
+		<hr class="w3-clear">
+		<p contenteditable="true" class="contentReply w3-border w3-padding"></p>
+        <button type="button" class="replyPostBtn w3-button w3-theme"><i class="fa fa-paper-plane"></i> &nbsp;Reply</button> 
+	</div>
  </div>
 </c:forEach>

@@ -51,7 +51,7 @@ $(document).ready(function(){
 			cview = "GetTweetsFromUser";
 		});
 	});
-	/* Get and visualize Tweets from a followings */
+	/* Get and visualize Tweets from followings */
 	$(".vFT").click(function(event){
 		event.preventDefault();
 		$("#dtweets").load( "GetTweetsFromFollowings", { uid: uid, start: 0 , end: nt } , function(data) {
@@ -77,21 +77,6 @@ $(document).ready(function(){
 			});
 		});
 	});
-	
-	
-	/* Comment on tweet*/
-
-	$("body").on("click",".comment",function(event){
-        event.preventDefault();
-        var tweet = $(this).parent();
-        $.post( "CommentTweet", {tid: $(this).parent().attr("id"), uid:uid, content: tweet.find(".cM:first").val() } , function(data) {
-        	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
-				start = nt;
-				cview = "GetTweetsFromUser";
-			});
-       	});
-    });
-	
 	
 	// ***************************************************************************************************//
 	// Elements $("body").on("click","...)  caputure clicks of elements that have been dinamically loaded //
@@ -159,6 +144,68 @@ $(document).ready(function(){
 			start = start - 1;
 		});
 	});
+	
+	/* Update Profile picture */
+	$("body").on("click",".changePicture",function(event){
+		event.preventDefault();
+		var url = $(this).parent().find("input").val();
+		$.post( "SetProfilePictureController", { profilePicture: url, user:uid} , function(data) {
+			$("#duser").load( "GetUserInfo", { user: uid } ,function() {
+				cview = "GetUserInfo";
+			});
+		});
+	});
+
+	/* Open Edit Tweet */
+	$("body").on("click",".editTw",function(event){
+		event.preventDefault();
+		var tweet = $(this).parent();
+		var inputBoxEdit = tweet.find(".underTwEdit:first");
+		var inputBoxReply = tweet.find(".underTwReply:first");
+		inputBoxEdit.show();
+		inputBoxReply.hide();
+	});
+	/* Edit Tweet */
+	$("body").on("click",".editPostBtn",function(event){
+		event.preventDefault();
+		var underTweet = $(this).parent();
+		var tweet = underTweet.parent();
+		var tid = tweet.attr("id");
+		var content = underTweet.find(".contentUnderTweet").text();
+		var inputBox = underTweet.find(".underTwEdit:first");
+		$.post( "EditTweetController", { content:content, tid:tid} , function(data) {
+			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
+				start = nt;
+				cview = "GetTweetsFromUser";
+			});
+		});
+	});
+	
+	/* Open Reply Tweet */
+	$("body").on("click",".replyTw",function(event){
+		event.preventDefault();
+		var underTweet = $(this).parent();
+		var inputBoxReply = underTweet.find(".underTwReply:first");
+		var inputBoxEdit = underTweet.find(".underTwEdit:first");
+		inputBoxReply.show();
+		inputBoxEdit.hide();
+	});
+	/* Reply Tweet */
+	$("body").on("click",".replyPostBtn",function(event){
+		event.preventDefault();
+		var underTweet = $(this).parent();
+		var tweet = underTweet.parent();
+		var tid = tweet.attr("id");
+		var content = underTweet.find(".contentReply").text();
+		var inputBox = underTweet.find(".underTwReply:first");
+        $.post( "CommentTweet", {tid: tid, uid:uid, content: content } , function(data) {
+        	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
+				start = nt;
+				cview = "GetTweetsFromUser";
+			});
+       	});
+	});
+	
 });
 </script>
 
@@ -182,7 +229,7 @@ $(document).ready(function(){
            <div class="w3-container w3-padding">
              <h6 class="w3-opacity"> EPAW template by UPF </h6>
              <p id="cT" contenteditable="true" class="w3-border w3-padding">Status: Feeling EPAW</p>
-             <button id="aT" type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i> &nbsp;Post</button> 
+             <button id="aT" type="button" class="w3-button w3-theme"><i class="fa fa-paper-plane"></i> &nbsp;Post</button> 
            </div>
          </div>
        </div>

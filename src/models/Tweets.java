@@ -16,7 +16,6 @@ public class Tweets implements java.io.Serializable {
 	private boolean isFollowed;
 
 	public Tweets() {
-		likes = 0;
 	}
 
 	public Integer getLikes() {

@@ -93,17 +93,15 @@ public class ManageTweets {
 	}
 	
 	/* Update a tweet */
-	public void updateTweet(Integer tid, String uid, Timestamp postDateTime, String content) {
+	public void updateTweet(Integer tid, String content) {
 		// Note that this is done using https://www.arquitecturajava.com/jdbc-prepared-statement-y-su-manejo/
-		String query = "UPDATE tweets SET uid = ? , postDateTime = ? , content = ?  WHERE tid = ? ;";
+		String query = "UPDATE tweets SET content = ?  WHERE tid = ? ;";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
-			statement.setString(1,uid);
-			statement.setTimestamp(2,postDateTime);
-			statement.setString(3,content);
+			statement.setString(1,content);
+			statement.setInt(2,tid);
 			statement.executeUpdate();
-			statement.setInt(4,tid);
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -254,7 +252,11 @@ public class ManageTweets {
 	
 	// Get tweets from user follows
 	public List<Tweets> getFollowsTweets(String uid) {
-		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content FROM tweets JOIN followers ON followers.fid = tweets.uid WHERE followers.uid = ? ;";
+		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content,tweets.likes "
+		 		+ "FROM tweets "
+		 		+ "JOIN followers "
+		 		+ "ON followers.fid = tweets.uid "
+		 		+ "WHERE followers.uid = ? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
 		 try {
@@ -267,6 +269,7 @@ public class ManageTweets {
 				 tweet.setUid(rs.getString("uid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
@@ -279,7 +282,11 @@ public class ManageTweets {
 	
 	// Get tweets from user follows start and end
 	public List<Tweets> getFollowsTweets(String uid, Integer start, Integer end) {
-		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content FROM tweets JOIN followers ON followers.fid = tweets.uid WHERE followers.uid = ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
+		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content,tweets.likes "
+		 		+ "FROM tweets JOIN followers ON followers.fid = tweets.uid "
+		 		+ "WHERE followers.uid = ? "
+		 		+ "ORDER BY tweets.postdatetime "
+		 		+ "DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
 		 List<Tweets> l = new ArrayList<Tweets>();
 		 try {
@@ -294,6 +301,7 @@ public class ManageTweets {
 				 tweet.setUid(rs.getString("uid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
@@ -318,6 +326,7 @@ public class ManageTweets {
 				 tweet.setUid(rs.getString("uid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();

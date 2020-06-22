@@ -85,6 +85,22 @@ public class ManageUser {
 		return aux;
 	}
 	
+	// Get profile image from user
+	public void setProfilePicture(String URL, String uid) {
+		String query = "UPDATE users "
+				+ "SET profilePicture = ?"
+				+ "WHERE uid=?;";
+		PreparedStatement statement = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,URL);
+			statement.setString(2,uid);
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	// Get users a given user is following
 	public List<User> getUserFollows(String uid) {
