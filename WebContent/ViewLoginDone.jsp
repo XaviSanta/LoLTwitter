@@ -141,6 +141,17 @@ $(document).ready(function(){
 			start = start - 1;
 		});
 	});
+	
+	/* Update Profile picture */
+	$("body").on("click",".changePicture",function(event){
+		event.preventDefault();
+		var url = $(this).parent().find("input").val();
+		$.post( "SetProfilePictureController", { profilePicture: url, user:uid} , function(data) {
+			$("#duser").load( "GetUserInfo", { user: uid } ,function() {
+				cview = "GetUserInfo";
+			});
+		});
+	});
 });
 </script>
 
