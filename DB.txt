@@ -59,6 +59,7 @@ INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, 
 INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Pau","pau@pau.com","https://st.forocoches.com/foro/customavatars/avatar819153_3.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "cacahuetnoob", "Lucian");
 INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Natalia","natalia@natalia.com","https://st.forocoches.com/foro/customavatars/avatar47148_8.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "natalieme", "Lux");
 INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Santa","santa@santa.com","https://st.forocoches.com/foro/customavatars/avatar540561_4.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "Santa", "Bardo");
+INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("user","user@santa.com","https://st.forocoches.com/foro/customavatars/avatar795596_3.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),0, "aaa", "Thresh");
 -- Tweets
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (303, "Ruachi", NOW(), "Holaa", null ,0);
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (304, "Santa", NOW(), "Holasdf", null ,0);

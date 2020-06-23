@@ -282,7 +282,7 @@ public class ManageTweets {
 	
 	// Get tweets from user follows start and end
 	public List<Tweets> getFollowsTweets(String uid, Integer start, Integer end) {
-		 String query = "SELECT tweets.tid,tweets.uid,tweets.postdatetime,tweets.content,tweets.likes "
+		 String query = "SELECT tweets.tid,tweets.uid,tweets.pid,tweets.postdatetime,tweets.content,tweets.likes "
 		 		+ "FROM tweets JOIN followers ON followers.fid = tweets.uid "
 		 		+ "WHERE followers.uid = ? "
 		 		+ "ORDER BY tweets.postdatetime "
@@ -299,6 +299,7 @@ public class ManageTweets {
 				 Tweets tweet = new Tweets();
    			     tweet.setTid(rs.getInt("tid"));
 				 tweet.setUid(rs.getString("uid"));
+				 tweet.setPid(rs.getInt("pid"));
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
 				 tweet.setLikes(rs.getInt("likes"));
