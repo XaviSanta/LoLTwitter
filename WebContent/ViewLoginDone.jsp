@@ -163,8 +163,8 @@ $(document).ready(function(){
 		event.preventDefault();
 		var user = $(this).parent();
 		
-		$.post( "UnfollowUserController", {uid:uid, fid:userProfile.attr("id")} , function(data) {
-			userProfile.remove();
+		$.post( "UnfollowUserController", {uid:uid, fid:user.attr("id")} , function(data) {
+			user.remove();
 			start = start - 1;
 		});
 	});

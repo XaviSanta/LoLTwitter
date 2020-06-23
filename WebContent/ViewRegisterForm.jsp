@@ -5,27 +5,27 @@
   <form action="RegisterController" method="POST" class="login-form">
     <h1>Register</h1>
       <ul class="server-errors-list">
-		<c:if test = "${userProfile.error[0]}">
+		<c:if test = "${user.error[0]}">
 			<p> Entered user name has been already registered </p>
 		</c:if>
 	  </ul>
     <div class="txtb">
-      <input type="text" name="user" value="${userProfile.user}" required minlength="3">
+      <input type="text" name="user" value="${user.user}" required minlength="3">
       <span data-placeholder="Username"></span>
     </div>
 
 	<div class="txtb">
-      <input  type="email" name="mail" value="${userProfile.mail}" required>
+      <input  type="email" name="mail" value="${user.mail}" required>
       <span data-placeholder="Email"></span>
     </div>
     
     <div class="txtb focus">
-      <input type="password" id="password" name="password" value = "${userProfile.password}" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$" title="More than 6 characters with lower, upper caps and numbers.">
+      <input type="password" id="password" name="password" value = "${user.password}" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$" title="More than 6 characters with lower, upper caps and numbers.">
       <span data-placeholder="Password"></span>
     </div>
     
     <div class="txtb focus">
-      <input type="password" id="pass_confirmation" name="password2" value = "${userProfile.password2}" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"title="More than 6 characters with lower, upper caps and numbers.">
+      <input type="password" id="pass_confirmation" name="password2" value = "${user.password2}" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"title="More than 6 characters with lower, upper caps and numbers.">
       <span data-placeholder="Confirm Password"></span>
     </div>
 
