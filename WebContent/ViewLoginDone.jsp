@@ -11,7 +11,7 @@ var start = 0;
 var nt = 4;
 var cview = "GetTweetsFromUser";
 var uid = "${user}";
-
+var userViewing = "";
 $(document).ready(function(){
 	
 	$("#duser").load( "GetUserInfo", { user:  uid } ,function() {});
@@ -24,7 +24,7 @@ $(document).ready(function(){
 	$(window).scroll(function(event) {
 		event.preventDefault();
 		if(Math.ceil($(window).scrollTop()) == $(document).outerHeight() - $(window).outerHeight()) {
-			$.post( cview , { uid: uid, start: start , end: start+nt } , function(data) {
+			$.post( cview , { uid: userViewing, start: start , end: start+nt } , function(data) {
 	    		$("#dtweets").append(data);
 	    		start = start + nt;
 			});
@@ -41,6 +41,11 @@ $(document).ready(function(){
 		$("#dtweets").load( "GetFollows", { uid: uid, start: 0 , end: nt } , function(data) {
 			start = nt;
 			cview = "GetFollows";
+			userViewing = uid;
+			var profileUser = $('#duser').find(".uidProfile:first").text();
+			if(uid !== profileUser) {
+				$('#duser').load("GetUserInfo", { user: uid } ,function() {});
+			}
 		});
 	});
 	/* Get and visualize Tweets from a given user */
@@ -49,14 +54,20 @@ $(document).ready(function(){
 		$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } , function(data) {
 			start = nt;
 			cview = "GetTweetsFromUser";
+			userViewing = uid;
 		});
 	});
 	/* Get and visualize Tweets from followings */
 	$(".vFT").click(function(event){
 		event.preventDefault();
 		$("#dtweets").load( "GetTweetsFromFollowings", { uid: uid, start: 0 , end: nt } , function(data) {
+			var profileUser = $('#duser').find(".uidProfile:first").text();
+			if(uid !== profileUser) {
+				$('#duser').load("GetUserInfo", { user: uid } ,function() {});
+			}
 			start = nt;
-			cview = "GetTweetsFromUser";
+			cview = "GetTweetsFromFollowings";
+			userViewing = uid;
 		});
 	});
 	/* Get and visualize Tweets from around the world*/
@@ -65,6 +76,11 @@ $(document).ready(function(){
 		$("#dtweets").load( "GetTweetsFromUser", { uid: "%", start: 0 , end: nt } , function(data) {
 			start = nt;
 			cview = "GetTweetsFromUser";
+			userViewing = "%";
+			var profileUser = $('#duser').find(".uidProfile:first").text();
+			if(uid !== profileUser) {
+				$('#duser').load("GetUserInfo", { user: uid } ,function() {});
+			}
 		});
 	});
 	/* Add tweet and reload Tweet Visualitzation */
@@ -74,6 +90,7 @@ $(document).ready(function(){
 			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
 				start = nt;
 				cview = "GetTweetsFromUser";
+				userViewing = uid;
 			});
 		});
 	});
@@ -83,12 +100,12 @@ $(document).ready(function(){
 	// ***************************************************************************************************//
 	
 	/* go to user perfil */
-	
 	$("body").on("click", ".perfil", function(event){
 		event.preventDefault();
 		var tweet = $(this).parent();
 		var target_user = tweet.attr("uid");
 		$.post( "GetUserInfo", {user: target_user } , function(data){
+			userViewing = target_user;
 	      	$("#dtweets").load( "GetTweetsFromUser", { uid: target_user, start: 0 , end: nt } ,function() {
 				start = nt;
 				cview = "GetTweetsFromUser";
@@ -99,7 +116,6 @@ $(document).ready(function(){
 	});
 	
 	/* Delete tweet from user */
-	
 	$("body").on("click",".dT",function(event){
 		event.preventDefault();
 		var tweet = $(this).parent();
