@@ -88,7 +88,6 @@ $(document).ready(function(){
 		event.preventDefault();
 		var tweet = $(this).parent();
 		var target_user = tweet.attr("uid");
-		console.log(tweet.attr("uid"));
 		$.post( "GetUserInfo", {user: target_user } , function(data){
 	      	$("#dtweets").load( "GetTweetsFromUser", { uid: target_user, start: 0 , end: nt } ,function() {
 				start = nt;
@@ -108,6 +107,30 @@ $(document).ready(function(){
 			tweet.remove();
 			start = start - 1;
 		});
+	});
+	
+	/* Delete User if admin */
+	$("body").on("click", ".dU", function(event){
+		event.preventDefault();
+		var profile = $(this).parent();
+		var uidProfile = profile.find(".uidProfile:first").text();
+		$.post( "DelUser", { user: uidProfile }, function(){
+			if(uidProfile == uid){
+				$('#navigation').load('LogoutController', function(){
+					location.reload();
+				});
+			}
+			else{
+				$('#duser').load("GetUserInfo", { user: uid } ,function() {
+					cview = "GetUserInfo";
+				});
+	        	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
+					start = nt;
+					cview = "GetTweetsFromUser";
+				});
+			}
+		});
+		
 	});
 	
 	$("body").on("click",".bf", function(event){
@@ -139,8 +162,9 @@ $(document).ready(function(){
 	$("body").on("click",".unfollow",function(event){
 		event.preventDefault();
 		var user = $(this).parent();
-		$.post( "UnfollowUserController", {uid:uid, fid:user.attr("id")} , function(data) {
-			user.remove();
+		
+		$.post( "UnfollowUserController", {uid:uid, fid:userProfile.attr("id")} , function(data) {
+			userProfile.remove();
 			start = start - 1;
 		});
 	});
@@ -167,6 +191,7 @@ $(document).ready(function(){
 			$("#duser").load( "GetUserInfo", { user: uid } ,function() {
 				cview = "GetUserInfo";
 			});
+			
 		});
 	});
 	

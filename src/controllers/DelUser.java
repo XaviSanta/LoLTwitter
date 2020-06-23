@@ -3,7 +3,6 @@ package controllers;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,20 +13,20 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import managers.ManageUser;
 import models.User;
+import models.Tweets;
 
 /**
- * Servlet implementation class GetUserInfo
+ * Servlet implementation class DelTweetFromUser
  */
-@WebServlet("/GetUserInfo")
-public class GetUserInfo extends HttpServlet {
+@WebServlet("/DelUser")
+public class DelUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetUserInfo() {
+    public DelUser() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -40,20 +39,12 @@ public class GetUserInfo extends HttpServlet {
 		try {
 			BeanUtils.populate(user, request.getParameterMap());
 			ManageUser userManager = new ManageUser();
-			user = userManager.getUser(user.getUser());
-			System.out.println(user.getUser());
-			
+			userManager.deleteUser(user.getUser());
 			userManager.finalize();
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		
-		request.setAttribute("userProfile",user);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewUserInfo.jsp"); 
-		dispatcher.include(request,response);
 	}
-	
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
