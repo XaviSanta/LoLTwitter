@@ -64,6 +64,21 @@ public class ManageUser {
 		return user;
 	}
 	
+	
+	public void deleteUser(String uid) {
+		System.out.println("Outside try" + uid);
+		String query = "DELETE FROM users WHERE uid = ? ;";
+		PreparedStatement statement = null;
+		try {
+			System.out.println("inside try: " + uid);
+			statement = db.prepareStatement(query);
+			statement.setString(1,uid);
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	};
 	// Get profile image from user
 	
 	public String getProfilePicture(String uid) {
