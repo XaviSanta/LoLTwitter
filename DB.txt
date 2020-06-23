@@ -27,7 +27,7 @@ CREATE TABLE `followers` (
   PRIMARY KEY (`uid`,`fid`),
   KEY `fid_users_fk` (`fid`),
   CONSTRAINT `fid_users_fk` FOREIGN KEY (`fid`) REFERENCES `users` (`uid`),
-  CONSTRAINT `uid_users_fk` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`)
+  CONSTRAINT `uid_users_fk` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `tweets` (
@@ -41,7 +41,7 @@ CREATE TABLE `tweets` (
   KEY `tweets_users_fk` (`uid`),
   KEY `tweets_tweets_fk` (`pid`),
   CONSTRAINT `tweets_tweets_fk` FOREIGN KEY (`pid`) REFERENCES `tweets` (`tid`),
-  CONSTRAINT `tweets_users_fk` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`)
+  CONSTRAINT `tweets_users_fk` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=294 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `likes` (
