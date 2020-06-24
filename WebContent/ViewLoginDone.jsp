@@ -8,7 +8,7 @@ $('#navigation').load('MenuController');
 
 <script>
 var start = 0;
-var nt = 4;
+var nt = 8;
 var cview = "GetTweetsFromUser";
 var uid = "${user}";
 var userViewing = "";
@@ -115,6 +115,24 @@ $(document).ready(function(){
 		});
 	});
 	
+	
+	/* go to user perfil from follows*/
+	$("body").on("click", ".perfilFollows", function(event){
+		event.preventDefault();
+		var profile = $(this).parent();
+		var target_user = profile.find(".perfilFollows").text();
+		$.post( "GetUserInfo", {user: target_user } , function(data){
+			userViewing = target_user;
+	      	$("#dtweets").load( "GetTweetsFromUser", { uid: target_user, start: 0 , end: nt } ,function() {
+				start = nt;
+				cview = "GetTweetsFromUser";
+			});
+	      	$("#duser").load( "GetUserInfo", { user: target_user } ,function() {
+			});
+		});
+	});
+	
+	
 	/* Delete tweet from user */
 	$("body").on("click",".dT",function(event){
 		event.preventDefault();
@@ -215,13 +233,11 @@ $(document).ready(function(){
 		event.preventDefault();
 		var lolUsername = $(this).parent().find(".lolusername").val();
 		var mainChampion = $(this).parent().find(".mainchampion").val();
-		console.log(lolUsername);
-		console.log(mainChampion);
-		$.post( "SetProfileInfoController", { user:uid, lolUsername:lolUsername, mainChampion:mainChampion} , function(data) {
-			$("#duser").load( "GetUserInfo", { user: uid } ,function() {
+		var userId = $(this).parent().find(".uidProfile").text();
+		$.post( "SetProfileInfoController", { user:userId, lolUsername:lolUsername, mainChampion:mainChampion} , function(data) {
+			$("#duser").load( "GetUserInfo", { user: userId } ,function() {
 				cview = "GetUserInfo";
 			});
-			
 		});
 	});
 	

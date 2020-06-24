@@ -5,7 +5,7 @@
 <c:forEach var="u" items="${users}">       
  <div id="${u.user}" class="sU w3-container w3-card w3-white w3-round w3-margin w3-animate-opacity"><br>
    <img src="${u.profilePicture}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-   <h4> ${u.user} </h4><br>
+   <button class="perfilFollows" style="background:none;border:none;font-weight:bold;font-size:large">${u.user}</button><br>
    <button type="button" class="unfollow w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Unfollow</button> 
  </div>
 </c:forEach>
