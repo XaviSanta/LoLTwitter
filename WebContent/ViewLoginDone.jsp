@@ -8,7 +8,7 @@ $('#navigation').load('MenuController');
 
 <script>
 var start = 0;
-var nt = 4;
+var nt = 8;
 var cview = "GetTweetsFromUser";
 var uid = "${user}";
 var userViewing = "";
