@@ -8,7 +8,7 @@ $('#navigation').load('MenuController');
 
 <script>
 var start = 0;
-var nt = 8;
+var nt = 4;
 var cview = "GetTweetsFromUser";
 var uid = "${user}";
 var userViewing = "";
@@ -51,11 +51,19 @@ $(document).ready(function(){
 	/* Get and visualize Tweets from a given user */
 	$(".vT").click(function(event){
 		event.preventDefault();
-		$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } , function(data) {
+		
+		
+		$("#dtweets").load( "GetTweetsFromUser", { uid: userViewing , start: 0 , end: nt } , function(data) {
 			start = nt;
 			cview = "GetTweetsFromUser";
-			userViewing = uid;
+			userViewing = "%";
+			var profileUser = $('#duser').find(".uidProfile:first").text();
+			if(uid !== profileUser) {
+				$('#duser').load("GetUserInfo", { user: uid } ,function() {});
+			}
 		});
+		
+		
 	});
 	/* Get and visualize Tweets from followings */
 	$(".vFT").click(function(event){
@@ -87,11 +95,19 @@ $(document).ready(function(){
 	$("#aT").click(function(event){
 		event.preventDefault();
 		$.post( "AddTweetFromUser", { uid: uid, content: $("#cT").text() } , function(data) {
+			
+			
 			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
 				start = nt;
 				cview = "GetTweetsFromUser";
 				userViewing = uid;
+							
 			});
+			
+
+			
+
+			
 		});
 	});
 	
@@ -114,24 +130,6 @@ $(document).ready(function(){
 			});
 		});
 	});
-	
-	
-	/* go to user perfil from follows*/
-	$("body").on("click", ".perfilFollows", function(event){
-		event.preventDefault();
-		var profile = $(this).parent();
-		var target_user = profile.find(".perfilFollows").text();
-		$.post( "GetUserInfo", {user: target_user } , function(data){
-			userViewing = target_user;
-	      	$("#dtweets").load( "GetTweetsFromUser", { uid: target_user, start: 0 , end: nt } ,function() {
-				start = nt;
-				cview = "GetTweetsFromUser";
-			});
-	      	$("#duser").load( "GetUserInfo", { user: target_user } ,function() {
-			});
-		});
-	});
-	
 	
 	/* Delete tweet from user */
 	$("body").on("click",".dT",function(event){
@@ -233,11 +231,13 @@ $(document).ready(function(){
 		event.preventDefault();
 		var lolUsername = $(this).parent().find(".lolusername").val();
 		var mainChampion = $(this).parent().find(".mainchampion").val();
-		var userId = $(this).parent().find(".uidProfile").text();
-		$.post( "SetProfileInfoController", { user:userId, lolUsername:lolUsername, mainChampion:mainChampion} , function(data) {
-			$("#duser").load( "GetUserInfo", { user: userId } ,function() {
+		console.log(lolUsername);
+		console.log(mainChampion);
+		$.post( "SetProfileInfoController", { user:uid, lolUsername:lolUsername, mainChampion:mainChampion} , function(data) {
+			$("#duser").load( "GetUserInfo", { user: uid } ,function() {
 				cview = "GetUserInfo";
 			});
+			
 		});
 	});
 	
