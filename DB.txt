@@ -26,7 +26,7 @@ CREATE TABLE `followers` (
   `fid` varchar(20) NOT NULL,
   PRIMARY KEY (`uid`,`fid`),
   KEY `fid_users_fk` (`fid`),
-  CONSTRAINT `fid_users_fk` FOREIGN KEY (`fid`) REFERENCES `users` (`uid`),
+  CONSTRAINT `fid_users_fk` FOREIGN KEY (`fid`) REFERENCES `users` (`uid`) ON DELETE CASCADE,
   CONSTRAINT `uid_users_fk` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
