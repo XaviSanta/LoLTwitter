@@ -13,7 +13,7 @@
 	<button class="perfil" style="background:none;border:none;font-weight:bold;font-size:large;height:50px"> ${t.uid} </button>
 	<span tid="${t.tid}" class="hoverB tweetId" style="color:gray">#${t.tid}</span>
 	<c:if test="${t.pid!=0}">
-		<p pid="${t.pid}" class="parentContent tweetResponse">Tweet in response to ${t.uid}'s tweet \#${t.pid}</p> 
+		<p pid="${t.pid}" class="parentContent tweetResponse" style="color:gray">Reply to <strong>${t.uid}</strong>'s tweet \#${t.pid}</p> 
 	</c:if>
 	<c:if test="${user != null && t.uid != user && !t.isFollowed}">
 		<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button> 

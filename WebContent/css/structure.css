@@ -16,3 +16,8 @@
   background-color: deepskyblue;
   cursor: pointer;
 }
+
+.contentT {
+	word-wrap: break-word;
+    word-break: break-word;
+}
