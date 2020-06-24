@@ -115,6 +115,24 @@ $(document).ready(function(){
 		});
 	});
 	
+	
+	/* go to user perfil from follows*/
+	$("body").on("click", ".perfilFollows", function(event){
+		event.preventDefault();
+		var profile = $(this).parent();
+		var target_user = profile.find(".perfilFollows").text();
+		$.post( "GetUserInfo", {user: target_user } , function(data){
+			userViewing = target_user;
+	      	$("#dtweets").load( "GetTweetsFromUser", { uid: target_user, start: 0 , end: nt } ,function() {
+				start = nt;
+				cview = "GetTweetsFromUser";
+			});
+	      	$("#duser").load( "GetUserInfo", { user: target_user } ,function() {
+			});
+		});
+	});
+	
+	
 	/* Delete tweet from user */
 	$("body").on("click",".dT",function(event){
 		event.preventDefault();
