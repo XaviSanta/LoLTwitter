@@ -24,14 +24,14 @@ import models.dTmodel;
 /**
  * Servlet implementation class dTcontroller
  */
-@WebServlet("/GetTweetsFromUser")
-public class GetTweetsFromUser extends HttpServlet {
+@WebServlet("/GetTweetInfoController")
+public class GetTweetInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetTweetsFromUser() {
+    public GetTweetInfoController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,50 +41,43 @@ public class GetTweetsFromUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		dTmodel dt = new dTmodel();
-		List<Tweets> tweets = Collections.emptyList();
+		Tweets tweet = new Tweets();
+		List<Tweets> replies = Collections.emptyList();
+		ManageUser userManager = new ManageUser();
 		List<String> followings =  Collections.emptyList();
-		String view = "ViewTweetsFromUser.jsp";
+		
 		try {
+			BeanUtils.populate(tweet, request.getParameterMap());
+			ManageTweets tweetManager = new ManageTweets();
+			tweet = tweetManager.getTweet(tweet.getTid());
+			tweet.setProfilePicture(userManager.getProfilePicture(tweet.getUid()));
+			
+			replies = tweetManager.getReplies(tweet.getTid());
+			tweetManager.finalize();
+			
 			HttpSession session = request.getSession(false);
-			BeanUtils.populate(dt, request.getParameterMap());
-			if (session==null || session.getAttribute("user")==null) {
-				ManageTweets tweetManager = new ManageTweets();
-				if(dt.getUid() == null) {
-					tweets = tweetManager.getUserTweets("%",0,20);
-				} else {
-					tweets = tweetManager.getUserTweets(dt.getUid(),0,20);
-				}
-				tweetManager.finalize();
-				view = "ViewFromAnon.jsp";
-			} else {
-				
-				ManageTweets tweetManager = new ManageTweets();
-				tweets = tweetManager.getUserTweets(dt.getUid(),dt.getStart(),dt.getEnd());
-				tweetManager.finalize();
-				ManageUser muser = new ManageUser();
-				String currUser = session.getAttribute("user").toString();
-				followings= muser.getUserFollowsString(currUser);
+			String currUser = session.getAttribute("user").toString();
+			followings= userManager.getUserFollowsString(currUser);
+			tweet.setIsFollowed(followings.contains(tweet.getUid()));
+			
+			for(int i=0;i<replies.size();i++) 
+			{
+				String uid = replies.get(i).getUid();
+				replies.get(i).setProfilePicture(userManager.getProfilePicture(uid));
+				boolean isFollowed = followings.contains(replies.get(i).getUid());
+				replies.get(i).setIsFollowed(isFollowed);
 			}
 			
-			ManageUser userManager = new ManageUser();
-			for(int i=0;i<tweets.size();i++) 
-			{
-				String uid = tweets.get(i).getUid();
-				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));
-				boolean isFollowed = followings.contains(tweets.get(i).getUid());
-				tweets.get(i).setIsFollowed(isFollowed);
-			}		
 			userManager.finalize();
+			
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 
-		
-		request.setAttribute("tweets", tweets);
-		RequestDispatcher dispatcher = request.getRequestDispatcher(view); 
+		request.setAttribute("tweet", tweet);
+		request.setAttribute("replies", replies);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetReplies.jsp"); 
 		dispatcher.forward(request,response);
-		
 	}
 
 	/**

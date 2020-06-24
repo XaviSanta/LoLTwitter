@@ -5,7 +5,6 @@
 $('#navigation').load('MenuController');
 </script>
 
-
 <script>
 var start = 0;
 var nt = 8;
@@ -23,11 +22,13 @@ $(document).ready(function(){
 	/* Infinite scrolling */
 	$(window).scroll(function(event) {
 		event.preventDefault();
-		if(Math.ceil($(window).scrollTop()) == $(document).outerHeight() - $(window).outerHeight()) {
-			$.post( cview , { uid: userViewing, start: start , end: start+nt } , function(data) {
-	    		$("#dtweets").append(data);
-	    		start = start + nt;
-			});
+		if(cview !=="GetTweetInfoController"){			
+			if(Math.ceil($(window).scrollTop()) == $(document).outerHeight() - $(window).outerHeight()) {
+				$.post( cview , { uid: userViewing, start: start , end: start+nt } , function(data) {
+		    		$("#dtweets").append(data);
+		    		start = start + nt;
+				});
+			}
 		}
 	});
 	
@@ -288,6 +289,22 @@ $(document).ready(function(){
        	});
 	});
 	
+	/* Show Tweet + Replies */
+	$("body").on("click",".tweetResponse",function(event){
+		event.preventDefault();
+		var tid = $(this).attr('pid');
+        $("#dtweets").load( "GetTweetInfoController", { tid: tid } ,function() {
+			cview = "GetTweetInfoController";
+		});
+	});
+	/* Show Tweet + Replies */
+	$("body").on("click",".tweetId",function(event){
+		event.preventDefault();
+		var tid = $(this).attr('tid');
+        $("#dtweets").load( "GetTweetInfoController", { tid: tid } ,function() {
+			cview = "GetTweetInfoController";
+		});
+	});
 });
 </script>
 
