@@ -159,9 +159,23 @@ $(document).ready(function(){
 	$("body").on("click",".alik",function(event){
 		event.preventDefault();
 		var tweet = $(this).parent();
-		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid:uid } , function(data) {
+		var likeb = $(this);
+
+		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: "%" } , function(data) {
+
+			$("#dtweets").load( "GetTweetsFromUser", { uid: userViewing , start: 0 , end: nt } , function(data) {
+				start = nt;
+				cview = "GetTweetsFromUser";
+				userViewing = "%";
+				var profileUser = $('#duser').find(".uidProfile:first").text();
+				if(uid !== profileUser) {
+					$('#duser').load("GetUserInfo", { user: uid } ,function() {});
+				}
+			});
 			
 		});
+		
+
 	});
 
 	// Follow user
@@ -244,6 +258,8 @@ $(document).ready(function(){
 		var inputBoxEdit = underTweet.find(".underTwEdit:first");
 		inputBoxReply.show();
 		inputBoxEdit.hide();
+		
+		
 	});
 	/* Reply Tweet */
 	$("body").on("click",".replyPostBtn",function(event){
@@ -254,9 +270,14 @@ $(document).ready(function(){
 		var content = underTweet.find(".contentReply").text();
 		var inputBox = underTweet.find(".underTwReply:first");
         $.post( "CommentTweet", {tid: tid, uid:uid, content: content } , function(data) {
-        	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
+			$("#dtweets").load( "GetTweetsFromUser", { uid: userViewing , start: 0 , end: nt } , function(data) {
 				start = nt;
 				cview = "GetTweetsFromUser";
+				userViewing = "%";
+				var profileUser = $('#duser').find(".uidProfile:first").text();
+				if(uid !== profileUser) {
+					$('#duser').load("GetUserInfo", { user: uid } ,function() {});
+				}
 			});
        	});
 	});
