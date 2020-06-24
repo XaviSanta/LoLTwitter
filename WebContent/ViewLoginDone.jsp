@@ -165,14 +165,26 @@ $(document).ready(function(){
 		$.post( "GetUserInfo", {user: $("#sf").text() } , function(data){
 		});
 	});
-
+	
 	//add likes:
 	$("body").on("click",".alik",function(event){
 		event.preventDefault();
 		var tweet = $(this).parent();
-		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid:uid } , function(data) {
+		var likeb = $(this);
+		var temp = $('#duser').find(".uidProfile:first").text();
+		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: uid } , function(data) {
+			$("#dtweets").load( "GetTweetsFromUser", { uid: temp , start: 0 , end: nt } , function(data) {
+				start = nt;
+				cview = "GetTweetsFromUser";
+				var profileUser = $('#duser').find(".uidProfile:first").text();
+				if(uid !== profileUser) {
+					$('#duser').load("GetUserInfo", { user: profileUser } ,function() {});
+				}
+			});
 			
 		});
+		
+
 	});
 
 	// Follow user
@@ -206,7 +218,6 @@ $(document).ready(function(){
 			});
 		});
 	});
-
 	/* Update user info */
 	$("body").on("click",".updateInfo",function(event){
 		event.preventDefault();
@@ -262,11 +273,18 @@ $(document).ready(function(){
 		var tid = tweet.attr("id");
 		var content = underTweet.find(".contentReply").text();
 		var inputBox = underTweet.find(".underTwReply:first");
-        $.post( "CommentTweet", {tid: tid, uid:uid, content: content } , function(data) {
-        	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
+		var profileUser = $('#duser').find(".uidProfile:first").text();
+		
+        $.post( "CommentTweet", {tid: tid, uid:uid, content: content } , function(data) {      	
+			$("#dtweets").load( "GetTweetsFromUser", { uid: profileUser , start: 0 , end: nt } , function(data) {
 				start = nt;
 				cview = "GetTweetsFromUser";
+				
+				if(uid !== profileUser) {
+					$('#duser').load("GetUserInfo", { user: profileUser } ,function() {});
+				}
 			});
+			
        	});
 	});
 	
@@ -305,4 +323,3 @@ $(document).ready(function(){
    </div>
  <!-- End Grid -->
  </div>
- 
