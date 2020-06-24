@@ -53,7 +53,8 @@ public class GetTweetsFromFollowings extends HttpServlet {
 			for(int i=0;i<tweets.size();i++) 
 			{
 				String uid = tweets.get(i).getUid();
-				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));			
+				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));
+				tweets.get(i).setIsFollowed(true);
 			}
 			
 			userManager.finalize();
