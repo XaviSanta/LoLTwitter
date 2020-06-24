@@ -20,7 +20,7 @@
 
    <c:if test="${!isAdmin && userProfile.user != user }">
       <span onClick="openOpgg()" class="opGG">LoL Username </span>
-      <p  class="w3-border w3-margin-bottom">${userProfile.lolUsername}</p>
+      <p  class="lolusername2 w3-border w3-margin-bottom">${userProfile.lolUsername}</p>
       Main Champion
       <p  class="w3-border w3-margin-bottom">${userProfile.mainChampion}</p>
    </c:if>
@@ -41,7 +41,7 @@
 
    <script>
    	function openOpgg() {
-   		var lolusername = $('.lolusername').val();
+   		var lolusername = $('.lolusername').val() || $('.lolusername2').text();
    		window.open("https://euw.op.gg/summoner/userName="+lolusername);
    	}
    </script>
