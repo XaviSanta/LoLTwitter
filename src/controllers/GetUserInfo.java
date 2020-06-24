@@ -36,12 +36,13 @@ public class GetUserInfo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		User user = new User();
-		
+				
 		try {
 			BeanUtils.populate(user, request.getParameterMap());
 			ManageUser userManager = new ManageUser();
 			user = userManager.getUser(user.getUser());
 			System.out.println(user.getUser());
+			
 			
 			userManager.finalize();
 		} catch (IllegalAccessException | InvocationTargetException e) {

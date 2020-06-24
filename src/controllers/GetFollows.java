@@ -54,6 +54,7 @@ public class GetFollows extends HttpServlet {
 		}
 
 		request.setAttribute("users",users);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewFollows.jsp"); 
 		dispatcher.forward(request,response);
 	}
