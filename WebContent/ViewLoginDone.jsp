@@ -165,15 +165,15 @@ $(document).ready(function(){
 		$.post( "GetUserInfo", {user: $("#sf").text() } , function(data){
 		});
 	});
+	
 	//add likes:
 	$("body").on("click",".alik",function(event){
 		event.preventDefault();
 		var tweet = $(this).parent();
 		var likeb = $(this);
-
-		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: "%" } , function(data) {
-
-			$("#dtweets").load( "GetTweetsFromUser", { uid: userViewing , start: 0 , end: nt } , function(data) {
+		var temp = $('#duser').find(".uidProfile:first").text();
+		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: uid } , function(data) {
+			$("#dtweets").load( "GetTweetsFromUser", { uid: temp , start: 0 , end: nt } , function(data) {
 				start = nt;
 				cview = "GetTweetsFromUser";
 				var profileUser = $('#duser').find(".uidProfile:first").text();
