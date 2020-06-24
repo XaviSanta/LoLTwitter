@@ -219,13 +219,11 @@ $(document).ready(function(){
 		event.preventDefault();
 		var lolUsername = $(this).parent().find(".lolusername").val();
 		var mainChampion = $(this).parent().find(".mainchampion").val();
-		console.log(lolUsername);
-		console.log(mainChampion);
-		$.post( "SetProfileInfoController", { user:uid, lolUsername:lolUsername, mainChampion:mainChampion} , function(data) {
-			$("#duser").load( "GetUserInfo", { user: uid } ,function() {
+		var userId = $(this).parent().find(".uidProfile").text();
+		$.post( "SetProfileInfoController", { user:userId, lolUsername:lolUsername, mainChampion:mainChampion} , function(data) {
+			$("#duser").load( "GetUserInfo", { user: userId } ,function() {
 				cview = "GetUserInfo";
 			});
-			
 		});
 	});
 	
