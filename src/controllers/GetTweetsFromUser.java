@@ -44,15 +44,21 @@ public class GetTweetsFromUser extends HttpServlet {
 		dTmodel dt = new dTmodel();
 		List<Tweets> tweets = Collections.emptyList();
 		List<String> followings =  Collections.emptyList();
-		
+		String view = "ViewTweetsFromUser.jsp";
 		try {
 			HttpSession session = request.getSession(false);
-			if (session==null || session.getAttribute("user")==null) { // Anonymous user can see up to 20 tweets
+			BeanUtils.populate(dt, request.getParameterMap());
+			if (session==null || session.getAttribute("user")==null) {
 				ManageTweets tweetManager = new ManageTweets();
-				tweets = tweetManager.getUserTweets("%",0,20);
+				if(dt.getUid() == null) {
+					tweets = tweetManager.getUserTweets("%",0,20);
+				} else {
+					tweets = tweetManager.getUserTweets(dt.getUid(),0,20);
+				}
 				tweetManager.finalize();
+				view = "ViewFromAnon.jsp";
 			} else {
-				BeanUtils.populate(dt, request.getParameterMap());
+				
 				ManageTweets tweetManager = new ManageTweets();
 				tweets = tweetManager.getUserTweets(dt.getUid(),dt.getStart(),dt.getEnd());
 				tweetManager.finalize();
@@ -68,8 +74,6 @@ public class GetTweetsFromUser extends HttpServlet {
 				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));
 				boolean isFollowed = followings.contains(tweets.get(i).getUid());
 				tweets.get(i).setIsFollowed(isFollowed);
-				//System.out.println(isFollowed);
-				//System.out.println(followings.get(0));
 			}		
 			userManager.finalize();
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -78,7 +82,7 @@ public class GetTweetsFromUser extends HttpServlet {
 
 		
 		request.setAttribute("tweets", tweets);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetsFromUser.jsp"); 
+		RequestDispatcher dispatcher = request.getRequestDispatcher(view); 
 		dispatcher.forward(request,response);
 		
 	}
