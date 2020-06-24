@@ -173,16 +173,12 @@ $(document).ready(function(){
 		var tweet = $(this).parent();
 		var likeb = $(this);
 		var temp = $('#duser').find(".uidProfile:first").text();
+		var likeSpan = tweet.find(".nLikes:first");
+		nLikes = likeSpan.text();
+		console.log(nLikes);
+		likeb.attr('disabled', 'disabled');
 		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: uid } , function(data) {
-			$("#dtweets").load( "GetTweetsFromUser", { uid: temp , start: 0 , end: nt } , function(data) {
-				start = nt;
-				cview = "GetTweetsFromUser";
-				var profileUser = $('#duser').find(".uidProfile:first").text();
-				if(uid !== profileUser) {
-					$('#duser').load("GetUserInfo", { user: profileUser } ,function() {});
-				}
-			});
-			
+			likeSpan.text(+nLikes+1);
 		});
 		
 
@@ -238,8 +234,12 @@ $(document).ready(function(){
 		var tweet = $(this).parent();
 		var inputBoxEdit = tweet.find(".underTwEdit:first");
 		var inputBoxReply = tweet.find(".underTwReply:first");
-		inputBoxEdit.show();
-		inputBoxReply.hide();
+		if (inputBoxEdit.is(':visible')){
+			inputBoxEdit.hide();
+		} else {		
+			inputBoxEdit.show();
+			inputBoxReply.hide();
+		}
 	});
 	/* Edit Tweet */
 	$("body").on("click",".editPostBtn",function(event){
@@ -248,12 +248,12 @@ $(document).ready(function(){
 		var tweet = underTweet.parent();
 		var tid = tweet.attr("id");
 		var content = underTweet.find(".contentUnderTweet").text();
-		var inputBox = underTweet.find(".underTwEdit:first");
+		var inputBox = tweet.find(".underTwEdit");
+		var contentP = tweet.find(".contentT:first");
+		console.log(inputBox);
 		$.post( "EditTweetController", { content:content, tid:tid} , function(data) {
-			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
-				start = nt;
-				cview = "GetTweetsFromUser";
-			});
+			contentP.text(content);
+			inputBox.hide();
 		});
 	});
 	
@@ -263,8 +263,12 @@ $(document).ready(function(){
 		var underTweet = $(this).parent();
 		var inputBoxReply = underTweet.find(".underTwReply:first");
 		var inputBoxEdit = underTweet.find(".underTwEdit:first");
-		inputBoxReply.show();
-		inputBoxEdit.hide();
+		if (inputBoxReply.is(':visible')){
+			inputBoxReply.hide();
+		} else {		
+			inputBoxReply.show();
+			inputBoxEdit.hide();
+		}
 	});
 	/* Reply Tweet */
 	$("body").on("click",".replyPostBtn",function(event){
@@ -276,16 +280,10 @@ $(document).ready(function(){
 		var inputBox = underTweet.find(".underTwReply:first");
 		var profileUser = $('#duser').find(".uidProfile:first").text();
 		
-        $.post( "CommentTweet", {tid: tid, uid:uid, content: content } , function(data) {      	
-			$("#dtweets").load( "GetTweetsFromUser", { uid: profileUser , start: 0 , end: nt } , function(data) {
-				start = nt;
-				cview = "GetTweetsFromUser";
-				
-				if(uid !== profileUser) {
-					$('#duser').load("GetUserInfo", { user: profileUser } ,function() {});
-				}
+        $.post( "CommentTweet", {tid: tid, uid:uid, content: content } , function(data) {  
+			$("#dtweets").load( "GetTweetInfoController", { tid: tid } ,function() {
+				cview = "GetTweetInfoController";
 			});
-			
        	});
 	});
 	
