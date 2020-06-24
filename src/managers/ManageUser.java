@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest; 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -160,6 +161,30 @@ public class ManageUser {
 		} 
 		return  l;
 	}
+	
+	//get following string:
+	public List<String> getUserFollowsString(String uid) {
+		 String query = "SELECT followers.fid FROM followers WHERE followers.uid = ?;";
+		 PreparedStatement statement = null;
+		 List<String> l =  new ArrayList<String>();
+		
+		 try {
+			 statement = db.prepareStatement(query);
+			 statement.setString(1,uid);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 String fid= rs.getString("fid"); 
+				 l.add(fid);	 
+			 }
+			 rs.close();
+			 statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return  l;
+	}
+	
+	
 	
 	public List<User> getUserFollows(String uid, Integer start, Integer end) {
 		 String query = "SELECT users.uid FROM followers JOIN users ON users.uid = followers.fid WHERE followers.uid = ? ORDER BY users.uid LIMIT ?,?;";
