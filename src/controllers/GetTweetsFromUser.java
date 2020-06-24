@@ -43,6 +43,7 @@ public class GetTweetsFromUser extends HttpServlet {
 		
 		dTmodel dt = new dTmodel();
 		List<Tweets> tweets = Collections.emptyList();
+		List<String> followings =  Collections.emptyList();
 		
 		try {
 			HttpSession session = request.getSession(false);
@@ -55,13 +56,20 @@ public class GetTweetsFromUser extends HttpServlet {
 				ManageTweets tweetManager = new ManageTweets();
 				tweets = tweetManager.getUserTweets(dt.getUid(),dt.getStart(),dt.getEnd());
 				tweetManager.finalize();
+				ManageUser muser = new ManageUser();
+				String currUser = session.getAttribute("user").toString();
+				followings= muser.getUserFollowsString(currUser);
 			}
 			
 			ManageUser userManager = new ManageUser();
 			for(int i=0;i<tweets.size();i++) 
 			{
 				String uid = tweets.get(i).getUid();
-				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));			
+				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));
+				boolean isFollowed = followings.contains(tweets.get(i).getUid());
+				tweets.get(i).setIsFollowed(isFollowed);
+				//System.out.println(isFollowed);
+				//System.out.println(followings.get(0));
 			}		
 			userManager.finalize();
 		} catch (IllegalAccessException | InvocationTargetException e) {

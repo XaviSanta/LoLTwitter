@@ -15,7 +15,7 @@
 	<c:if test="${t.pid!=0}">
 		<p class="parentContent">Tweet in response to ${t.uid}'s tweet \#${t.pid}</p> 
 	</c:if>
-	<c:if test="${user != null && t.uid != user}">
+	<c:if test="${user != null && t.uid != user && !t.isFollowed}">
 		<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button> 
 	</c:if>
 	<hr class="w3-clear">
