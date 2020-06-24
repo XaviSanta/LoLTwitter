@@ -53,11 +53,21 @@ $(document).ready(function(){
 	});
 	/* Get and visualize Tweets from around the world*/
 	$(".vW").click(function(event){
+		$(window).scroll(function(event) {
+			event.preventDefault();
+			if(Math.ceil($(window).scrollTop()) == $(document).outerHeight() - $(window).outerHeight()) {
+				$.post( cview , { uid: "%", start: start , end: start+nt } , function(data) {
+		    		$("#dtweets").append(data);
+		    		start = start + nt;
+				});
+			}
+		});
 		event.preventDefault();
 		$("#dtweets").load( "GetTweetsFromUser", { uid: "%", start: 0 , end: nt } , function(data) {
 			start = nt;
 			cview = "GetTweetsFromUser";
 		});
+
 	});
 	/* Add tweet and reload Tweet Visualitzation */
 	$("#aT").click(function(event){

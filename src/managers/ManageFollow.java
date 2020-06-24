@@ -1,7 +1,12 @@
 package managers;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import models.Follower;
+import models.Tweets;
 import utils.DAO;
 
 public class ManageFollow {
@@ -53,4 +58,31 @@ public class ManageFollow {
 			e.printStackTrace();
 		}
 	}
+	
+	// get followers:
+	public List<Follower> getFollowers(String uid) {
+		 String query = "SELECT uid, fid FROM followers WHERE followers.uid = ? ";
+		 PreparedStatement statement = null;
+		 List<Follower> l = new ArrayList<Follower>();
+		 try {
+			 statement = db.prepareStatement(query);
+			 statement.setString(1,uid);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 Follower foll = new Follower();
+    			 foll.setUid(rs.getString("uid"));
+				 foll.setFid(rs.getString("fid"));
+				 l.add(foll);
+			 }
+			 rs.close();
+			 statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return l;
+		} 
+		return  l;
+	}
+	
+	
+	
 }

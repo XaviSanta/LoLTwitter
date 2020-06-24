@@ -6,6 +6,10 @@
   <div 
 	id="${t.tid}" 
 	uid="${t.uid}"
+	followers =  "${followers}"
+	hide = "0"
+	hideorigin = "0"
+	
 	class="w3-container w3-card w3-white w3-round w3-margin w3-animate-opacity">
 	 
 	<br>
@@ -13,12 +17,27 @@
 	<span class="w3-right w3-opacity"> ${t.postDateTime} </span>
 	<span style="font-weight:bold;font-size:large"> ${t.uid} </span>
 	<span style="color:gray">#${t.tid}</span>
+	
 	<c:if test="${t.pid!=0}">
 		<p class="parentContent">Tweet in response to ${t.uid}'s tweet \#${t.pid}</p> 
 	</c:if>
-	<c:if test="${user != null && t.uid != user}">
+		
+
+	<c:forEach var="f" items="${followers}">
+		<c:if test="${t.uid == f.fid }">
+			<c:set var = "hide" scope = "session" value = "1"/>
+		</c:if>
+	</c:forEach>
+	
+	<var hide = "0"/>
+	<c:if test="${user != null && t.uid != user && hide == hideorigin }">
 		<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button> 
 	</c:if>
+	
+	<c:set var = "hide" scope = "session" value = "0"/>
+
+
+
 	<hr class="w3-clear">
 	<p> ${t.content} </p>
 	<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>&nbsp;<span> ${t.likes} </span></button> 

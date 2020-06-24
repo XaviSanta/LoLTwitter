@@ -15,8 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import managers.ManageFollow;
 import managers.ManageTweets;
 import managers.ManageUser;
+import models.Follower;
 import models.Tweets;
 import models.User;
 import models.dTmodel;
@@ -70,7 +72,20 @@ public class GetTweetsFromUser extends HttpServlet {
 		}		
 		userManager.finalize();
 		
+		
+		List<Follower> followers = Collections.emptyList();
+		ManageFollow mfollow = new ManageFollow();
+		
+		followers = mfollow.getFollowers(dt.getUid());
+		
+		mfollow.finalize();
+		
 		request.setAttribute("tweets", tweets);
+		
+		if(followers !=null) {
+			request.setAttribute("followers", followers);
+		}
+		
 
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetsFromUser.jsp"); 
