@@ -6,3 +6,13 @@
   float: right;
   color:red;
 }
+
+.tweetResponse:hover {
+  background-color: deepskyblue;
+  cursor: pointer;
+}
+
+.hoverB:hover{
+  background-color: deepskyblue;
+  cursor: pointer;
+}
