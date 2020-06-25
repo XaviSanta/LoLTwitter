@@ -88,7 +88,7 @@ $(document).ready(function(){
 	$("#aT").click(function(event){
 		event.preventDefault();
 		var content = $("#cT").text();
-		content = substituteTweetRef(content);
+		content = substituteYTRef(content);
 		$.post( "AddTweetFromUser", { uid: uid, content: content } , function(data) {
 			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
 				start = nt;
@@ -100,24 +100,35 @@ $(document).ready(function(){
 	
 
 	/* add link tweet */
-	$("#twitterLink").click(function(event){
+	$("#YouTubeLink").click(function(event){
 		event.preventDefault();
-		var content = $("#cT").text() + ' [Tweet]  [\\Tweet]'
+		var content = $("#cT").text() + ' [YT]  [\\YT]'
 		$("#cT").text(content);
 	});
-	function substituteTweetRef(content) {
-		var openTag = '[Tweet]';
-		var closingTag = '[\\Tweet]';
+	function substituteYTRef(content) {
+		var openTag = '[YT]';
+		var closingTag = '[\\YT]';
 		var i = content.indexOf(openTag);
 		var j = content.indexOf(closingTag);
 		if(i === -1 || j === -1) return content;
 		var pre = content.substring(0,i);
 		var link = content.substring(i + openTag.length, j);
 		var post = content.substring(j + closingTag.length);
-		var encodedTweet = '<blockquote class="twitter-tweet"><a href="' + link + '"></a></blockquote>';
+		var encodedTweet = '<iframe width="100%" height="500" src="' + 
+			'https://www.youtube.com/embed/' +
+			ytParser(link) + 
+			'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 	
-		console.log(pre + encodedTweet + post);
 		return pre + encodedTweet + post;
+	}
+	function ytParser(url) {
+		var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+		var match = url.match(regExp);
+		if (match && match[2].length == 11) {
+		  return match[2];
+		} else {
+		  //error
+		}
 	}
 	// ***************************************************************************************************//
 	// Elements $("body").on("click","...)  caputure clicks of elements that have been dinamically loaded //
@@ -350,7 +361,7 @@ $(document).ready(function(){
            <div class="w3-container w3-padding">
              <h6 class="w3-opacity"> Publish a tweet </h6>
              <p id="cT" contenteditable="true" class="w3-border w3-padding"></p>
-             <button id="twitterLink" class="w3-button w3-theme"><i class="fa fa-twitter"></i></button>
+             <button id="YouTubeLink" class="w3-button w3-theme"><i class="fa fa-youtube"></i></button>
              <button id="aT" type="button" class="w3-button w3-theme"><i class="fa fa-paper-plane"></i> &nbsp;Post</button> 
            </div>
          </div>
