@@ -87,7 +87,9 @@ $(document).ready(function(){
 	/* Add tweet and reload Tweet Visualitzation */
 	$("#aT").click(function(event){
 		event.preventDefault();
-		$.post( "AddTweetFromUser", { uid: uid, content: $("#cT").text() } , function(data) {
+		var content = $("#cT").text();
+		content = substituteTweetRef(content);
+		$.post( "AddTweetFromUser", { uid: uid, content: content } , function(data) {
 			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
 				start = nt;
 				cview = "GetTweetsFromUser";
@@ -96,6 +98,27 @@ $(document).ready(function(){
 		});
 	});
 	
+
+	/* add link tweet */
+	$("#twitterLink").click(function(event){
+		event.preventDefault();
+		var content = $("#cT").text() + ' [Tweet]  [\\Tweet]'
+		$("#cT").text(content);
+	});
+	function substituteTweetRef(content) {
+		var openTag = '[Tweet]';
+		var closingTag = '[\\Tweet]';
+		var i = content.indexOf(openTag);
+		var j = content.indexOf(closingTag);
+		if(i === -1 || j === -1) return content;
+		var pre = content.substring(0,i);
+		var link = content.substring(i + openTag.length, j);
+		var post = content.substring(j + closingTag.length);
+		var encodedTweet = '<blockquote class="twitter-tweet"><a href="' + link + '"></a></blockquote>';
+	
+		console.log(pre + encodedTweet + post);
+		return pre + encodedTweet + post;
+	}
 	// ***************************************************************************************************//
 	// Elements $("body").on("click","...)  caputure clicks of elements that have been dinamically loaded //
 	// ***************************************************************************************************//
@@ -303,6 +326,7 @@ $(document).ready(function(){
 			cview = "GetTweetInfoController";
 		});
 	});
+	
 });
 </script>
 
@@ -324,8 +348,9 @@ $(document).ready(function(){
        <div class="w3-col m12">
          <div class="w3-card w3-round w3-white">
            <div class="w3-container w3-padding">
-             <h6 class="w3-opacity"> EPAW template by UPF </h6>
-             <p id="cT" contenteditable="true" class="w3-border w3-padding">Status: Feeling EPAW</p>
+             <h6 class="w3-opacity"> Publish a tweet </h6>
+             <p id="cT" contenteditable="true" class="w3-border w3-padding"></p>
+             <button id="twitterLink" class="w3-button w3-theme"><i class="fa fa-twitter"></i></button>
              <button id="aT" type="button" class="w3-button w3-theme"><i class="fa fa-paper-plane"></i> &nbsp;Post</button> 
            </div>
          </div>
