@@ -44,7 +44,7 @@
 				<button class="perfil" style="background:none;border:none;font-weight:bold;font-size:large"> ${t.uid} </button>
 				<span style="color:gray">#${t.tid}</span>
 				<c:if test="${t.pid!=0}">
-					<p class="parentContent">Reply to <strong>${t.uid}</strong>'s tweet \#${t.pid}</p>
+					<p class="parentContent">Reply to \#${t.pid}</p>
 				</c:if>
 				<c:if test="${user != null && t.uid != user && !t.isFollowed}">
 					<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button>

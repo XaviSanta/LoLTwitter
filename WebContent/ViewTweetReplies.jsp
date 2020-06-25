@@ -12,7 +12,7 @@
 	<button class="perfil" style="background:none;border:none;font-weight:bold;font-size:large;height:50px"> ${tweet.uid} </button>
 	<span tid="${tweet.tid}" class="hoverB tweetId" style="color:gray">#${tweet.tid}</span>
 	<c:if test="${tweet.pid!=0}">
-		<p pid="${tweet.pid}" class="parentContent tweetResponse hoverB" style="color:gray">Reply to <strong>${tweet.uid}</strong>'s tweet \#${tweet.pid}</p> 
+		<p pid="${tweet.pid}" class="parentContent tweetResponse hoverB" style="color:gray">Reply to \#${tweet.pid}</p> 
 	</c:if>
 	<c:if test="${user != null && tweet.uid != user && !tweet.isFollowed}">
 		<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button> 
@@ -53,7 +53,7 @@
 		<button class="perfil" style="background:none;border:none;font-weight:bold;font-size:large"> ${r.uid} </button>
 		<span tid="${r.tid}" class="hoverB tweetId" style="color:gray">#${r.tid}</span>
 		<c:if test="${r.pid!=0}">
-			<p pid="${r.pid}" class="parentContent tweetResponse hoverB" style="color:gray">Reply to <strong>${r.uid}</strong> tweet \#${r.pid}</p> 
+			<p pid="${r.pid}" class="parentContent tweetResponse hoverB" style="color:gray">Reply to \#${r.pid}</p> 
 		</c:if>
 		<c:if test="${user != null && r.uid != user && !r.isFollowed}">
 			<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button> 
