@@ -361,7 +361,7 @@ $(document).ready(function(){
            <div class="w3-container w3-padding">
              <h6 class="w3-opacity"> Publish a tweet </h6>
              <p id="cT" contenteditable="true" class="w3-border w3-padding"></p>
-             <button id="YouTubeLink" class="w3-button w3-theme"><i class="fa fa-youtube"></i></button>
+             <button id="YouTubeLink" class="w3-button w3-theme"><i class="fa fa-youtube fa-lg"></i></button>
              <button id="aT" type="button" class="w3-button w3-theme"><i class="fa fa-paper-plane"></i> &nbsp;Post</button> 
            </div>
          </div>
