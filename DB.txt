@@ -57,8 +57,8 @@ set global time_zone = "-3:00";
 -- Users
 INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Ruachi","ruachi@ruachi.com","https://st.forocoches.com/foro/customavatars/avatar754652_4.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "ruachi", "Rumble");
 INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Pau","pau@pau.com","https://st.forocoches.com/foro/customavatars/avatar819153_3.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "cacahuetnoob", "Lucian");
-INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Natalia","natalia@natalia.com","https://st.forocoches.com/foro/customavatars/avatar47148_8.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "natalieme", "Lux");
-INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Santa","santa@santa.com","https://st.forocoches.com/foro/customavatars/avatar540561_4.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "Santa", "Bardo");
+INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Natalia","natalia@natalia.com","https://st.forocoches.com/foro/customavatars/avatar47148_8.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "robakills", "Lux");
+INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("Santa","santa@santa.com","https://st.forocoches.com/foro/customavatars/avatar540561_4.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),1, "I Santa I", "Bardo");
 INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("user1","user1@santa.com","https://st.forocoches.com/foro/customavatars/avatar795596_3.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),0, "aaa", "Thresh");
 INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("user2","user2@santa.com","https://st.forocoches.com/foro/customavatars/avatar795596_3.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),0, "aaa", "Thresh");
 INSERT INTO users (uid, email, profilePicture, password, salt, submission_date, isAdmin, lolUsername, mainChampion) VALUES ("user3","user3@santa.com","https://st.forocoches.com/foro/customavatars/avatar795596_3.gif",SHA2(CONCAT("Qwerty1","salt"),512),"salt",NOW(),0, "aaa", "Thresh");
@@ -71,11 +71,12 @@ INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (305, "P
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (306, "Natalia", NOW()+4, "Que tal vuestro dia? Estoy en racha de victorias!", null ,0);
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (307, "Santa", NOW()+5, "He tirado mi fin de semana -.-", 306 ,0);
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (308, "Santa", NOW()+6, "Holaas", null ,0);
-INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (309, "Ruachi", NOW()+7, "EnseÒame a jugaar!!", 306 ,0);
-INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (310, "Santa", NOW()+8, "Por quÈ siempre los nuevos champs est·n tan rotos...", null ,0);
+INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (309, "Ruachi", NOW()+7, "Ense√±ame a jugaar!!", 306 ,0);
+INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (310, "Santa", NOW()+8, "Por qu√© siempre los nuevos champs est√°n tan rotos...", null ,0);
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (311, "Pau", NOW()+9, "Habeis visto el nuevo parche?", null ,0);
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (312, "Natalia", NOW()+10, "Han nerfeado a Teemo. Soy feliz :D", 311 ,0);
-INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (313, "Santa", NOW()+11, "Echo de menos las pociones de man·", null ,0);
+INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (313, "Santa", NOW()+11, "Echo de menos las pociones de man√°", null ,0);
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (314, "user1", NOW()+12, "Alguien ranked?", null ,0);
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (315, "user2", NOW()+13, "Why I can' stop listening to this haha <br><br> <iframe width='100%' height='500' src='https://www.youtube.com/embed/fmI_Ndrxy14' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>", null ,0);
 INSERT INTO tweets (tid, uid, postdatetime, content, pid, likes) VALUES (316, "user3", NOW()+14, "EU better than NA", null ,0);
+
