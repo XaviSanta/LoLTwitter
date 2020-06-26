@@ -10,17 +10,28 @@
 	<br>
 	<img src="${t.profilePicture}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
 	<span class="w3-right w3-opacity"> ${t.postDateTime} </span>
-	<button class="perfil" style="background:none;border:none;font-weight:bold;font-size:large"> ${t.uid} </button>
-	<span style="color:gray">#${t.tid}</span>
+	<button class="perfil" style="background:none;border:none;font-weight:bold;font-size:large;height:50px"> ${t.uid} </button>
+	<span tid="${t.tid}" class="hoverB tweetId" style="color:gray">#${t.tid}</span>
 	<c:if test="${t.pid!=0}">
-		<p class="parentContent">Tweet in response to ${t.uid}'s tweet \#${t.pid}</p> 
+		<p pid="${t.pid}" class="parentContent tweetResponse" style="color:gray">Reply to \#${t.pid}</p> 
 	</c:if>
 	<c:if test="${user != null && t.uid != user && !t.isFollowed}">
 		<button type="button" class="follow w3-theme-d1"><i class="fa fa-user-plus"></i>&nbsp;Follow</button> 
 	</c:if>
 	<hr class="w3-clear">
-	<p> ${t.content} </p>
-	<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>&nbsp;<span> ${t.likes} </span></button> 
+	<p class="contentT"> ${t.content} </p>
+	
+	<c:if test="${t.isLikedByMe}">
+		<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-heart" style="color:red"></i>&nbsp;
+			<span class="nLikes">${t.likes}</span>
+		</button>
+	</c:if>
+	<c:if test="${!t.isLikedByMe}">
+		<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-heart" ></i>&nbsp;
+			<span class="nLikes">${t.likes}</span>
+		</button>
+	</c:if>
+	
 	<c:if test="${user != null}">
 		<c:if test="${isAdmin || t.uid == user}">
 			<button type="button" class="dT w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>

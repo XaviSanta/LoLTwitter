@@ -48,6 +48,9 @@ public class AddLikeFromUser extends HttpServlet {
 			boolean succes = likeManager.addLike(alikm.getTid(), alikm.getUid(), new Timestamp(System.currentTimeMillis()));
 			if(succes) {
 				manageTweet.likeTweet(alikm.getTid());
+			} else {
+				likeManager.deleteUserLike(alikm.getUid(), alikm.getTid());
+				manageTweet.dislikeTweet(alikm.getTid());
 			}
 			likeManager.finalize();
 		} catch (IllegalAccessException | InvocationTargetException e) {

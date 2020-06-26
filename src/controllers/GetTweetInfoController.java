@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -18,19 +19,18 @@ import managers.ManageLike;
 import managers.ManageTweets;
 import managers.ManageUser;
 import models.Tweets;
-import models.dTmodel;
 
 /**
  * Servlet implementation class dTcontroller
  */
-@WebServlet("/GetTweetsFromFollowings")
-public class GetTweetsFromFollowings extends HttpServlet {
+@WebServlet("/GetTweetInfoController")
+public class GetTweetInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetTweetsFromFollowings() {
+    public GetTweetInfoController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,26 +40,37 @@ public class GetTweetsFromFollowings extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		dTmodel dt = new dTmodel();
-		List<Tweets> tweets = Collections.emptyList();
+		Tweets tweet = new Tweets();
+		List<Tweets> replies = Collections.emptyList();
+		ManageUser userManager = new ManageUser();
+		List<String> followings =  Collections.emptyList();
 		List<Integer> likes =  Collections.emptyList();
-		
 		try {
-			BeanUtils.populate(dt, request.getParameterMap());
+			BeanUtils.populate(tweet, request.getParameterMap());
 			ManageTweets tweetManager = new ManageTweets();
-			tweets = tweetManager.getFollowsTweets(dt.getUid(),dt.getStart(),dt.getEnd());
+			tweet = tweetManager.getTweet(tweet.getTid());
+			tweet.setProfilePicture(userManager.getProfilePicture(tweet.getUid()));
+			
+			replies = tweetManager.getReplies(tweet.getTid());
 			tweetManager.finalize();
+			
+			HttpSession session = request.getSession(false);
+			String currUser = session.getAttribute("user").toString();
+			followings= userManager.getUserFollowsString(currUser);
+			tweet.setIsFollowed(followings.contains(tweet.getUid()));
+			
 			ManageLike likeManager = new ManageLike();
-			likes = likeManager.getLikes(dt.getUid());
-			ManageUser userManager = new ManageUser();
-			for(int i=0;i<tweets.size();i++) 
+			likes = likeManager.getLikes(currUser);
+			tweet.setIsLikedByMe(likes.contains(tweet.getTid()));
+			for(int i=0;i<replies.size();i++) 
 			{
-				String uid = tweets.get(i).getUid();
-				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));
-				tweets.get(i).setIsFollowed(true);
+				String uid = replies.get(i).getUid();
+				replies.get(i).setProfilePicture(userManager.getProfilePicture(uid));
+				boolean isFollowed = followings.contains(replies.get(i).getUid());
+				replies.get(i).setIsFollowed(isFollowed);
 				
-				boolean isLiked = likes.contains(tweets.get(i).getTid());
-				tweets.get(i).setIsLikedByMe(isLiked);
+				boolean isLiked = likes.contains(replies.get(i).getTid());
+				replies.get(i).setIsLikedByMe(isLiked);
 			}
 			
 			userManager.finalize();
@@ -67,9 +78,10 @@ public class GetTweetsFromFollowings extends HttpServlet {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		
-		request.setAttribute("tweets", tweets);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetsFromUser.jsp"); 
+
+		request.setAttribute("tweet", tweet);
+		request.setAttribute("replies", replies);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewTweetReplies.jsp"); 
 		dispatcher.forward(request,response);
 	}
 

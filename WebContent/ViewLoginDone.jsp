@@ -5,7 +5,6 @@
 $('#navigation').load('MenuController');
 </script>
 
-
 <script>
 var start = 0;
 var nt = 8;
@@ -23,11 +22,13 @@ $(document).ready(function(){
 	/* Infinite scrolling */
 	$(window).scroll(function(event) {
 		event.preventDefault();
-		if(Math.ceil($(window).scrollTop()) == $(document).outerHeight() - $(window).outerHeight()) {
-			$.post( cview , { uid: userViewing, start: start , end: start+nt } , function(data) {
-	    		$("#dtweets").append(data);
-	    		start = start + nt;
-			});
+		if(cview !=="GetTweetInfoController"){			
+			if(Math.ceil($(window).scrollTop()) == $(document).outerHeight() - $(window).outerHeight()) {
+				$.post( cview , { uid: userViewing, start: start , end: start+nt } , function(data) {
+		    		$("#dtweets").append(data);
+		    		start = start + nt;
+				});
+			}
 		}
 	});
 	
@@ -86,7 +87,9 @@ $(document).ready(function(){
 	/* Add tweet and reload Tweet Visualitzation */
 	$("#aT").click(function(event){
 		event.preventDefault();
-		$.post( "AddTweetFromUser", { uid: uid, content: $("#cT").text() } , function(data) {
+		var content = $("#cT").text();
+		content = substituteYTRef(content);
+		$.post( "AddTweetFromUser", { uid: uid, content: content } , function(data) {
 			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
 				start = nt;
 				cview = "GetTweetsFromUser";
@@ -95,6 +98,38 @@ $(document).ready(function(){
 		});
 	});
 	
+
+	/* add link tweet */
+	$("#YouTubeLink").click(function(event){
+		event.preventDefault();
+		var content = $("#cT").text() + ' [YT]  [\\YT]'
+		$("#cT").text(content);
+	});
+	function substituteYTRef(content) {
+		var openTag = '[YT]';
+		var closingTag = '[\\YT]';
+		var i = content.indexOf(openTag);
+		var j = content.indexOf(closingTag);
+		if(i === -1 || j === -1) return content;
+		var pre = content.substring(0,i);
+		var link = content.substring(i + openTag.length, j);
+		var post = content.substring(j + closingTag.length);
+		var encodedTweet = '<iframe width="100%" height="500" src="' + 
+			'https://www.youtube.com/embed/' +
+			ytParser(link) + 
+			'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+	
+		return pre + encodedTweet + post;
+	}
+	function ytParser(url) {
+		var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+		var match = url.match(regExp);
+		if (match && match[2].length == 11) {
+		  return match[2];
+		} else {
+		  //error
+		}
+	}
 	// ***************************************************************************************************//
 	// Elements $("body").on("click","...)  caputure clicks of elements that have been dinamically loaded //
 	// ***************************************************************************************************//
@@ -165,14 +200,25 @@ $(document).ready(function(){
 		$.post( "GetUserInfo", {user: $("#sf").text() } , function(data){
 		});
 	});
-
+	
 	//add likes:
 	$("body").on("click",".alik",function(event){
 		event.preventDefault();
 		var tweet = $(this).parent();
-		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid:uid } , function(data) {
-			
-		});
+		var likeb = $(this);
+		var temp = $('#duser').find(".uidProfile:first").text();
+		var likeSpan = tweet.find(".nLikes:first");
+		nLikes = likeSpan.text();
+		var heart = likeb.find("i:first");
+		if(heart.css('color') == 'rgb(255, 0, 0)'){
+			heart.css('color','black');
+			$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: uid } , function(data) {});
+			likeSpan.text(+nLikes-1);
+		} else if(heart.css('color') == 'rgb(0, 0, 0)') {
+			heart.css('color','red');
+			$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: uid } , function(data) {});
+			likeSpan.text(+nLikes+1);
+		}
 	});
 
 	// Follow user
@@ -206,7 +252,6 @@ $(document).ready(function(){
 			});
 		});
 	});
-
 	/* Update user info */
 	$("body").on("click",".updateInfo",function(event){
 		event.preventDefault();
@@ -226,8 +271,12 @@ $(document).ready(function(){
 		var tweet = $(this).parent();
 		var inputBoxEdit = tweet.find(".underTwEdit:first");
 		var inputBoxReply = tweet.find(".underTwReply:first");
-		inputBoxEdit.show();
-		inputBoxReply.hide();
+		if (inputBoxEdit.is(':visible')){
+			inputBoxEdit.hide();
+		} else {		
+			inputBoxEdit.show();
+			inputBoxReply.hide();
+		}
 	});
 	/* Edit Tweet */
 	$("body").on("click",".editPostBtn",function(event){
@@ -236,12 +285,12 @@ $(document).ready(function(){
 		var tweet = underTweet.parent();
 		var tid = tweet.attr("id");
 		var content = underTweet.find(".contentUnderTweet").text();
-		var inputBox = underTweet.find(".underTwEdit:first");
+		var inputBox = tweet.find(".underTwEdit");
+		var contentP = tweet.find(".contentT:first");
+		console.log(inputBox);
 		$.post( "EditTweetController", { content:content, tid:tid} , function(data) {
-			$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
-				start = nt;
-				cview = "GetTweetsFromUser";
-			});
+			contentP.text(content);
+			inputBox.hide();
 		});
 	});
 	
@@ -251,8 +300,12 @@ $(document).ready(function(){
 		var underTweet = $(this).parent();
 		var inputBoxReply = underTweet.find(".underTwReply:first");
 		var inputBoxEdit = underTweet.find(".underTwEdit:first");
-		inputBoxReply.show();
-		inputBoxEdit.hide();
+		if (inputBoxReply.is(':visible')){
+			inputBoxReply.hide();
+		} else {		
+			inputBoxReply.show();
+			inputBoxEdit.hide();
+		}
 	});
 	/* Reply Tweet */
 	$("body").on("click",".replyPostBtn",function(event){
@@ -262,12 +315,30 @@ $(document).ready(function(){
 		var tid = tweet.attr("id");
 		var content = underTweet.find(".contentReply").text();
 		var inputBox = underTweet.find(".underTwReply:first");
-        $.post( "CommentTweet", {tid: tid, uid:uid, content: content } , function(data) {
-        	$("#dtweets").load( "GetTweetsFromUser", { uid: uid, start: 0 , end: nt } ,function() {
-				start = nt;
-				cview = "GetTweetsFromUser";
+		var profileUser = $('#duser').find(".uidProfile:first").text();
+		
+        $.post( "CommentTweet", {tid: tid, uid:uid, content: content } , function(data) {  
+			$("#dtweets").load( "GetTweetInfoController", { tid: tid } ,function() {
+				cview = "GetTweetInfoController";
 			});
        	});
+	});
+	
+	/* Show Tweet + Replies */
+	$("body").on("click",".tweetResponse",function(event){
+		event.preventDefault();
+		var tid = $(this).attr('pid');
+        $("#dtweets").load( "GetTweetInfoController", { tid: tid } ,function() {
+			cview = "GetTweetInfoController";
+		});
+	});
+	/* Show Tweet + Replies */
+	$("body").on("click",".tweetId",function(event){
+		event.preventDefault();
+		var tid = $(this).attr('tid');
+        $("#dtweets").load( "GetTweetInfoController", { tid: tid } ,function() {
+			cview = "GetTweetInfoController";
+		});
 	});
 	
 });
@@ -291,8 +362,9 @@ $(document).ready(function(){
        <div class="w3-col m12">
          <div class="w3-card w3-round w3-white">
            <div class="w3-container w3-padding">
-             <h6 class="w3-opacity"> EPAW template by UPF </h6>
-             <p id="cT" contenteditable="true" class="w3-border w3-padding">Status: Feeling EPAW</p>
+             <h6 class="w3-opacity"> Publish a tweet </h6>
+             <p id="cT" contenteditable="true" class="w3-border w3-padding"></p>
+             <button id="YouTubeLink" class="w3-button w3-theme"><i class="fa fa-youtube fa-lg"></i></button>
              <button id="aT" type="button" class="w3-button w3-theme"><i class="fa fa-paper-plane"></i> &nbsp;Post</button> 
            </div>
          </div>
@@ -305,4 +377,3 @@ $(document).ready(function(){
    </div>
  <!-- End Grid -->
  </div>
- 

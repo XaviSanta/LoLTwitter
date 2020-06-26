@@ -34,7 +34,7 @@ public class ManageTweets {
 	
 	/* Get a tweet given its PK */
 	public Tweets getTweet(Integer tid) {
-		String query = "SELECT tid,uid,postDateTime,content FROM tweets WHERE tid = ? ;";
+		String query = "SELECT * FROM tweets WHERE tid = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		Tweets tweet = null;
@@ -46,8 +46,10 @@ public class ManageTweets {
 				tweet = new Tweets();
 				tweet.setTid(rs.getInt("tid"));
 				tweet.setUid(rs.getString("uid"));
-				tweet.setPostDateTime(rs.getTimestamp("postDateTime"));
+				tweet.setPid(rs.getInt("pid"));
+				tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				tweet.setContent(rs.getString("content"));
+				tweet.setLikes(rs.getInt("likes"));
 			}
 			rs.close();
 			statement.close();
@@ -112,6 +114,20 @@ public class ManageTweets {
 	public void likeTweet(Integer tid) {
 		// Note that this is done using https://www.arquitecturajava.com/jdbc-prepared-statement-y-su-manejo/
 		String query = "UPDATE tweets SET likes = likes +1 WHERE tid= ?;";
+		PreparedStatement statement = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setInt(1,tid);
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	// remove like
+	public void dislikeTweet(Integer tid) {
+		// Note that this is done using https://www.arquitecturajava.com/jdbc-prepared-statement-y-su-manejo/
+		String query = "UPDATE tweets SET likes = likes -1 WHERE tid= ?;";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
@@ -338,4 +354,29 @@ public class ManageTweets {
 		return  l;
 	}
 
+	public List<Tweets> getReplies(Integer tid) {
+		String query = "SELECT * FROM tweets WHERE pid = ?";
+		PreparedStatement statement = null;
+		List<Tweets> l = new ArrayList<Tweets>();
+		try {
+			 statement = db.prepareStatement(query);
+			 statement.setInt(1,tid);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 Tweets tweet = new Tweets();
+   			     tweet.setTid(rs.getInt("tid"));
+				 tweet.setUid(rs.getString("uid"));
+				 tweet.setPid(rs.getInt("pid"));
+				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
+				 tweet.setContent(rs.getString("content"));
+				 tweet.setLikes(rs.getInt("likes"));
+				 l.add(tweet);
+			 }
+			 rs.close();
+			 statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return  l;
+	}
 }
