@@ -209,13 +209,16 @@ $(document).ready(function(){
 		var temp = $('#duser').find(".uidProfile:first").text();
 		var likeSpan = tweet.find(".nLikes:first");
 		nLikes = likeSpan.text();
-		console.log(nLikes);
-		likeb.attr('disabled', 'disabled');
-		$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: uid } , function(data) {
+		var heart = likeb.find("i:first");
+		if(heart.css('color') == 'rgb(255, 0, 0)'){
+			heart.css('color','black');
+			$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: uid } , function(data) {});
+			likeSpan.text(+nLikes-1);
+		} else if(heart.css('color') == 'rgb(0, 0, 0)') {
+			heart.css('color','red');
+			$.post( "AddLikeFromUser", {tid: $(this).parent().attr("id"), uid: uid } , function(data) {});
 			likeSpan.text(+nLikes+1);
-		});
-		
-
+		}
 	});
 
 	// Follow user

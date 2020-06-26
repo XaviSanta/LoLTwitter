@@ -14,6 +14,7 @@ public class Tweets implements java.io.Serializable {
 	private Integer likes;
 	private String profilePicture;
 	private boolean isFollowed;
+	private boolean isLikedByMe = false;
 
 	public Tweets() {
 	}
@@ -80,5 +81,13 @@ public class Tweets implements java.io.Serializable {
 
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
+	}
+
+	public boolean getIsLikedByMe() {
+		return isLikedByMe;
+	}
+
+	public void setIsLikedByMe(boolean isLikedByMe) {
+		this.isLikedByMe = isLikedByMe;
 	}
 }
