@@ -3,3 +3,42 @@
   background-color: deepskyblue;
   cursor: pointer;
 }
+
+div{
+
+  	background-color: powderblue;
+
+}
+
+
+#rcorners1 {
+    border-radius: 25px;
+    
+}
+a.w3-bar-item.w3-button{
+
+	background-color: #100F0F;
+  	background: rgba(0, 0, 0, 0.60);
+  	height: 500px;
+  	width: 10%;
+  	font-family: cursive;
+	font-size: 25px;
+	color: "white";
+	font-weight: normal;
+	text-align: center;
+
+
+}
+
+i {
+	color: "white";
+	font-weight: normal;
+	text-align: center;
+}
+
+a{
+	font-size: 25px;
+	color: "white";
+	font-weight: normal;
+	text-align: center;
+}
