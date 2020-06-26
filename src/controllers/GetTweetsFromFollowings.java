@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import managers.ManageLike;
 import managers.ManageTweets;
 import managers.ManageUser;
 import models.Tweets;
-import models.User;
 import models.dTmodel;
 
 /**
@@ -42,19 +42,24 @@ public class GetTweetsFromFollowings extends HttpServlet {
 		
 		dTmodel dt = new dTmodel();
 		List<Tweets> tweets = Collections.emptyList();
+		List<Integer> likes =  Collections.emptyList();
 		
 		try {
 			BeanUtils.populate(dt, request.getParameterMap());
 			ManageTweets tweetManager = new ManageTweets();
 			tweets = tweetManager.getFollowsTweets(dt.getUid(),dt.getStart(),dt.getEnd());
 			tweetManager.finalize();
-			
+			ManageLike likeManager = new ManageLike();
+			likes = likeManager.getLikes(dt.getUid());
 			ManageUser userManager = new ManageUser();
 			for(int i=0;i<tweets.size();i++) 
 			{
 				String uid = tweets.get(i).getUid();
 				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));
 				tweets.get(i).setIsFollowed(true);
+				
+				boolean isLiked = likes.contains(tweets.get(i).getTid());
+				tweets.get(i).setIsLikedByMe(isLiked);
 			}
 			
 			userManager.finalize();

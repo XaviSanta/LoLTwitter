@@ -118,14 +118,15 @@ public class ManageLike {
 		}
 	}
 	
-	// dislike by uid + tweet:!!!!!!!!!!!!!!!!!
-	public void deleteUserLike(String uid, Integer tweet_id) {
+	// dislike by uid + tweet
+	public void deleteUserLike(String uid, Integer tid) {
 		// Note that this is done using https://www.arquitecturajava.com/jdbc-prepared-statement-y-su-manejo/
 		String query = "DELETE FROM likes WHERE (uid,tweet_id) = (?,?)";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
 			statement.setString(1,uid);
+			statement.setInt(2,tid);
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLException e) {
@@ -158,6 +159,25 @@ public class ManageLike {
 		return  l;
 	}
 	
+	// Get likes from a user:
+		public List<Integer> getLikes(String uid) {
+			 String query = "SELECT likes.tweet_ID FROM likes where likes.uid = ? ;";
+			 PreparedStatement statement = null;
+			 List<Integer> l = new ArrayList<Integer>();
+			 try {
+				 statement = db.prepareStatement(query);
+				 statement.setString(1,uid);
+				 ResultSet rs = statement.executeQuery();
+				 while (rs.next()) {
+					 l.add(rs.getInt("tweet_ID"));
+				 }
+				 rs.close();
+				 statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} 
+			return  l;
+		}
 	
 	// Get likes from a user given start and end dates:
 	public List<Like> getUserLikes(String uid,Integer start, Integer end) {

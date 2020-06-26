@@ -15,11 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+import managers.ManageLike;
 import managers.ManageTweets;
 import managers.ManageUser;
 import models.Tweets;
-import models.User;
-import models.dTmodel;
 
 /**
  * Servlet implementation class dTcontroller
@@ -45,7 +44,7 @@ public class GetTweetInfoController extends HttpServlet {
 		List<Tweets> replies = Collections.emptyList();
 		ManageUser userManager = new ManageUser();
 		List<String> followings =  Collections.emptyList();
-		
+		List<Integer> likes =  Collections.emptyList();
 		try {
 			BeanUtils.populate(tweet, request.getParameterMap());
 			ManageTweets tweetManager = new ManageTweets();
@@ -60,12 +59,18 @@ public class GetTweetInfoController extends HttpServlet {
 			followings= userManager.getUserFollowsString(currUser);
 			tweet.setIsFollowed(followings.contains(tweet.getUid()));
 			
+			ManageLike likeManager = new ManageLike();
+			likes = likeManager.getLikes(currUser);
+			tweet.setIsLikedByMe(likes.contains(tweet.getTid()));
 			for(int i=0;i<replies.size();i++) 
 			{
 				String uid = replies.get(i).getUid();
 				replies.get(i).setProfilePicture(userManager.getProfilePicture(uid));
 				boolean isFollowed = followings.contains(replies.get(i).getUid());
 				replies.get(i).setIsFollowed(isFollowed);
+				
+				boolean isLiked = likes.contains(replies.get(i).getTid());
+				replies.get(i).setIsLikedByMe(isLiked);
 			}
 			
 			userManager.finalize();

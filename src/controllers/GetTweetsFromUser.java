@@ -17,8 +17,8 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import managers.ManageTweets;
 import managers.ManageUser;
+import managers.ManageLike;
 import models.Tweets;
-import models.User;
 import models.dTmodel;
 
 /**
@@ -44,6 +44,7 @@ public class GetTweetsFromUser extends HttpServlet {
 		dTmodel dt = new dTmodel();
 		List<Tweets> tweets = Collections.emptyList();
 		List<String> followings =  Collections.emptyList();
+		List<Integer> likes =  Collections.emptyList();
 		String view = "ViewTweetsFromUser.jsp";
 		try {
 			HttpSession session = request.getSession(false);
@@ -65,6 +66,8 @@ public class GetTweetsFromUser extends HttpServlet {
 				ManageUser muser = new ManageUser();
 				String currUser = session.getAttribute("user").toString();
 				followings= muser.getUserFollowsString(currUser);
+				ManageLike likeManager = new ManageLike();
+				likes = likeManager.getLikes(currUser);
 			}
 			
 			ManageUser userManager = new ManageUser();
@@ -74,6 +77,8 @@ public class GetTweetsFromUser extends HttpServlet {
 				tweets.get(i).setProfilePicture(userManager.getProfilePicture(uid));
 				boolean isFollowed = followings.contains(tweets.get(i).getUid());
 				tweets.get(i).setIsFollowed(isFollowed);
+				boolean isLiked = likes.contains(tweets.get(i).getTid());
+				tweets.get(i).setIsLikedByMe(isLiked);
 			}		
 			userManager.finalize();
 		} catch (IllegalAccessException | InvocationTargetException e) {

@@ -20,8 +20,18 @@
 	</c:if>
 	<hr class="w3-clear">
 	<p class="contentT"> ${t.content} </p>
-	<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>&nbsp;
-	<span class="nLikes">${t.likes}</span></button> 
+	
+	<c:if test="${t.isLikedByMe}">
+		<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-heart" style="color:red"></i>&nbsp;
+			<span class="nLikes">${t.likes}</span>
+		</button>
+	</c:if>
+	<c:if test="${!t.isLikedByMe}">
+		<button type="button" class="alik w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-heart" ></i>&nbsp;
+			<span class="nLikes">${t.likes}</span>
+		</button>
+	</c:if>
+	
 	<c:if test="${user != null}">
 		<c:if test="${isAdmin || t.uid == user}">
 			<button type="button" class="dT w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button>
